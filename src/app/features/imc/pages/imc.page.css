@@ -1,0 +1,106 @@
+/* WRAPPER PARA CENTRALIZAR IGUAL A HOME */
+.page-wrapper {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* TÍTULO CENTRALIZADO NO CONTEÚDO */
+.titulo-pagina {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* CONTAINER */
+.container {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* INPUTS */
+.input-area {
+  margin-bottom: 15px;
+}
+
+.input-area input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  font-size: 16px;
+  box-sizing: border-box; /* evita estourar */
+}
+
+/* BOTÃO */
+.btn-calcular {
+  width: 100%;
+  padding: 12px;
+  font-size: 17px;
+  background: #007bff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.btn-calcular:hover {
+  background: #005fcc;
+}
+
+/* RESULTADO */
+.resultado {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* GRAFICO */
+.grafico-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.grafico {
+  width: 500px;
+  height: 250px;
+  border-top-left-radius: 500px;
+  border-top-right-radius: 500px;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  border: 2px solid #444;
+  border-bottom: none;
+}
+
+/* Faixas */
+.faixa {
+  flex: 1;
+  font-weight: bold;
+  font-size: 13px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 35px;
+}
+
+.faixa1 { background: #f1c40f; }
+.faixa2 { background: #2980b9; color:white; }
+.faixa3 { background: #e67e22; }
+.faixa4 { background: #c0392b; color:white; }
+
+.ponteiro {
+  width: 4px;
+  height: 140px;
+  background: black;
+  position: absolute;
+  bottom: 0;     /* <-- AGORA ELE ENCOSTA NA BORDA DO GRÁFICO */
+  left: 50%;
+  transform-origin: bottom;  /* <-- o giro parte de baixo pra cima */
+  transform: rotate(-90deg);
+  transition: 0.5s ease-in-out;
+}

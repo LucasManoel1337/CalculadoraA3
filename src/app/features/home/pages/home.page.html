@@ -1,1 +1,15 @@
-<h1>Tela Home</h1>
+<div class="home-container">
+  <h1>Sobre o Projeto</h1>
+
+  <p class="descricao">
+    {{ descricao }}
+  </p>
+
+  <h2>Integrantes do grupo</h2>
+
+  <ul>
+    <li *ngFor="let membro of integrantes">
+      {{ membro }}
+    </li>
+  </ul>
+</div>
