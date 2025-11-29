@@ -36,4 +36,11 @@ export class HomePage {
     'Biblioteca chart.js',
     'Biblioteca mathjs'
   ];
+
+  linguagens = [
+    'Javacsript',
+    'Typescript',
+    'HTML',
+    'CSS',
+  ]
 }
