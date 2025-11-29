@@ -22,7 +22,10 @@ export class Funcao1Page {
   xValor: string = '';
   bValor: string = '';
 
-  // valores numéricos usados para exibir resultado
+  // limite máximo de dígitos (sem contar o sinal -)
+  private readonly MAX_DIGITOS = 12;
+
+  // valores numéricos usados para exibir o resultado
   valores = {
     a: 0,
     b: 0,
@@ -63,13 +66,11 @@ export class Funcao1Page {
   adicionar(caractere: string): void {
     let atual = this.getValorCampo(this.campoAtual);
 
-    // botão de sinal: caractere '-' → alterna o sinal
+    // botão de sinal: caractere '-' e alterna o sinal
     if (caractere === '-') {
       if (atual.startsWith('-')) {
-        // se já é negativo, remove o '-'
         atual = atual.slice(1);
       } else {
-        // se não tem nada ou é positivo, coloca '-' na frente
         atual = '-' + atual;
       }
       this.setValorCampo(this.campoAtual, atual);
@@ -77,8 +78,15 @@ export class Funcao1Page {
       return;
     }
 
-    // evita dois pontos decimais no mesmo número
+    // impede mais de um ponto decimal
     if (caractere === '.' && atual.includes('.')) {
+      return;
+    }
+
+    // limita quantidade de dígitos (ignora o hífen na contagem)
+    const semSinal = atual.startsWith('-') ? atual.slice(1) : atual;
+    if (semSinal.length >= this.MAX_DIGITOS) {
+      // já chegou no limite, acabou pro beta
       return;
     }
 
@@ -117,7 +125,6 @@ export class Funcao1Page {
     const y = a * x + b;
 
     if (a === 0) {
-      // não é função de 1º grau
       this.resultado = {
         y,
         raiz: null,

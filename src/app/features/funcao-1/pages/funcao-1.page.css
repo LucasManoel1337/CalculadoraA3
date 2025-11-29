@@ -40,6 +40,11 @@
   border-radius: 12px;
   border: 1px solid #e5e7eb;
   background: #f9fafb;
+
+  /* impede quebrar layout quando o texto fique grandão (la ele) */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Campo selecionado (A / X / B) */
@@ -91,9 +96,14 @@
   font-size: 16px;
   font-weight: 600;
   margin-top: 4px;
+
+  /* mesma proteção visual */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* === Teclado numérico (baseado em Operações Básicas) === */
+/* === Teclado numérico === */
 
 .botoes-container {
   display: grid;
