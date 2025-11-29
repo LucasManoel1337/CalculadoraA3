@@ -1,0 +1,85 @@
+/* Centraliza o card no conteúdo */
+.page-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titulo-pagina {
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 20px;
+}
+
+/* Card branco central */
+.content-container {
+  width: 600px;
+  background: #ffffff;
+  margin-top: 25px;
+  padding: 25px;
+  border-radius: 22px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.07);
+}
+
+/* Mesmo estilo de campos da Matriz */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 14px;
+}
+
+input,
+select {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #dcdcdc;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #8ab4ff;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  background: #4a7dff;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.2s ease;
+}
+
+.action-btn:hover {
+  background: #2f63e0;
+}
+
+/* Resultado */
+.resultado-container {
+  margin-top: 24px;
+}
+
+.sub-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.resultado-linha {
+  font-size: 16px;
+  margin: 4px 0;
+}

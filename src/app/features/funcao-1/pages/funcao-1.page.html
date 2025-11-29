@@ -1,8 +1,66 @@
 <div class="page-container">
-    <h2 class="titulo-pagina">Tela Função 1º Grau</h2>
-    <div class="content-container">
+  <h2 class="titulo-pagina">Tela Função 1º Grau</h2>
 
-        
+  <div class="content-container">
 
+    <!-- FORMULÁRIO -->
+    <form [formGroup]="funcao1Form" (ngSubmit)="calcular()">
+      <div class="form-group">
+        <label for="a">Coeficiente a</label>
+        <input
+          type="number"
+          id="a"
+          formControlName="a"
+          placeholder="Ex: 2" />
+      </div>
+
+      <div class="form-group">
+        <label for="b">Coeficiente b</label>
+        <input
+          type="number"
+          id="b"
+          formControlName="b"
+          placeholder="Ex: -4" />
+      </div>
+
+      <div class="form-group">
+        <label for="x">Valor de x</label>
+        <input
+          type="number"
+          id="x"
+          formControlName="x"
+          placeholder="Ex: 3" />
+      </div>
+
+      <button type="submit" class="action-btn">
+        Calcular
+      </button>
+    </form>
+
+    <!-- RESULTADO -->
+    <div *ngIf="resultado" class="resultado-container">
+      <h2 class="sub-title">Resultado</h2>
+
+      <p class="resultado-linha">
+        f(x) = {{ valores.a }} · x + {{ valores.b }}
+      </p>
+
+      <p class="resultado-linha">
+        Para x = {{ valores.x }}, temos f(x) = {{ resultado.y }}.
+      </p>
+
+      <p
+        class="resultado-linha"
+        *ngIf="resultado.eFuncao1Grau; else naoEhFuncao1Grau">
+        Raiz da função (f(x) = 0): x = {{ resultado.raiz }}.
+      </p>
+
+      <ng-template #naoEhFuncao1Grau>
+        <p class="resultado-linha">
+          Como a = 0, não é uma função do 1º grau (não há raiz definida).
+        </p>
+      </ng-template>
     </div>
+
+  </div>
 </div>
