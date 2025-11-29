@@ -28,4 +28,9 @@ export class HomePage {
     A proposta é criar uma calculadora/site completa contendo várias funcionalidades,
     desde cálculos básicos até operações matemáticas mais elaboradas.
   `;
+
+  tecnologias = [
+    'Angular v20',
+    'Node v22',
+  ];
 }

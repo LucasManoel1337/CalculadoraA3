@@ -1,0 +1,55 @@
+.display {
+  width: 96%;
+  height: 50px;
+  font-size: 24px;
+  text-align: right;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.botoes-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+button {
+  padding: 15px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.clear-btn {
+  background-color: #dc3545;
+}
+
+.clear-btn:hover  {
+  background-color: #6d1720;
+}
+
+.calcular-btn {
+  background-color: #25b900;
+}
+
+.calcular-btn:hover  {
+  background-color: #176803;
+}
+
+.apagar-btn {
+  background-color: #00eeff;
+}
+
+.apagar-btn:hover  {
+  background-color: #028a94;
+}

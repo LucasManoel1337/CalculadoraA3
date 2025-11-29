@@ -3,64 +3,45 @@
 
   <div class="content-container">
 
-    <div class="form-group">
-      <label for="linhas">Linhas (Máximo de 20 linhas)</label>
-      <input type="number"
-             id="linhas"
-             min="1"
-             max="20"
-             [(ngModel)]="linhas"
-             (ngModelChange)="resetarMatriz()"
-             placeholder="Ex: 3" 
-             (keypress)="permitirSomenteNumeros($event, 20)"
-             (paste)="bloquearPasteNegativo($event)" />
-    </div>
+    <form [formGroup]="matrizForm" (ngSubmit)="gerarMatriz()">
+      <div class="form-group">
+        <label for="linhas">Linhas (Máximo de 20)</label>
+        <input type="number" id="linhas" formControlName="linhas" (ngModelChange)="resetarMatriz()" (keypress)="permitirSomenteNumeros($event, 20)"
+             (paste)="bloquearPasteNegativo($event)" placeholder="Ex: 3"/>
+      </div>
 
-    <div class="form-group">
-      <label for="colunas">Colunas (Máximo de 20 colunas)</label>
-      <input type="number"
-             id="colunas"
-             min="1"
-             max="20"
-             [(ngModel)]="colunas"
-             (ngModelChange)="resetarMatriz()"
-             placeholder="Ex: 4"
-             (keypress)="permitirSomenteNumeros($event, 20)"
-             (paste)="bloquearPasteNegativo($event)" />
-    </div>
+      <div class="form-group">
+        <label for="colunas">Colunas (Máximo de 20)</label>
+        <input type="number" id="colunas" formControlName="colunas" (ngModelChange)="resetarMatriz()" (keypress)="permitirSomenteNumeros($event, 20)"
+             (paste)="bloquearPasteNegativo($event)" placeholder="Ex: 4"/>
+      </div>
 
-    <div class="form-group">
-      <label for="regra">Regra (use i para linhas e j para colunas)</label>
-      <input type="text"
-             id="regra"
-             [(ngModel)]="regra"
-             (ngModelChange)="resetarMatriz()"
-             placeholder="Ex: i*i*j - 10" />
-    </div>
+      <div class="form-group">
+        <label for="regra">Regra (use i para linhas e j para colunas)</label>
+        <input type="text" id="regra" formControlName="regra" placeholder="Ex: i*i*j - 10"/>
+      </div>
 
-    <app-checkbox
-      label="Matriz Diagonal"
-      [(checked)]="matrizDiagonal"
-      (checkedChange)="resetarMatriz()">
-    </app-checkbox>
+      <app-checkbox
+        label="Matriz Diagonal"
+        [checked]="matrizForm.get('matrizDiagonal')?.value"
+        (checkedChange)="matrizForm.get('matrizDiagonal')?.setValue($event)">
+      </app-checkbox>
 
-    <button class="action-btn" (click)="gerarMatriz()">Gerar Matriz</button>
+      <button type="submit" class="action-btn">Gerar Matriz</button>
+    </form>
 
     <div *ngIf="matriz.length > 0" class="matriz-container">
       <h2 class="sub-title">Resultado de Matriz</h2>
-
       <table class="matriz-table">
         <tr *ngFor="let linha of matriz">
           <td *ngFor="let cel of linha">{{ cel }}</td>
         </tr>
       </table>
-
       <button *ngIf="matrizTransposta.length == 0" class="action-btn" (click)="gerarTransposta()">Gerar Matriz Transposta</button>
     </div>
 
     <div *ngIf="matrizTransposta.length > 0" class="matriz-container">
       <h2 class="sub-title">Resultado de Matriz Transposta</h2>
-
       <table class="matriz-table">
         <tr *ngFor="let linha of matrizTransposta">
           <td *ngFor="let cel of linha">{{ cel }}</td>

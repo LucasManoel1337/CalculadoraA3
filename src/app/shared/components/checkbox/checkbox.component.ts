@@ -1,19 +1,23 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-checkbox',
   standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.css']
 })
 export class CheckboxComponent {
 
-  @Input() label: string = "";        // Texto acima do checkbox
-  @Input() checked: boolean = false;  // Valor inicial
+  @Input() label: string = "";          // Texto do checkbox
+  @Input() checked: boolean = false;    // Valor inicial
   @Output() checkedChange = new EventEmitter<boolean>(); // Emite quando muda
 
-  alterarValor() {
-    this.checked = !this.checked;
-    this.checkedChange.emit(this.checked);
+  // Emitindo o valor diretamente do input
+  onChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.checkedChange.emit(input.checked);
   }
 }
