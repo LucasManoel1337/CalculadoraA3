@@ -4,22 +4,22 @@
   <div class="content-container">
 
     <div class="form-group">
-      <label for="linhas">Linhas (Maximo de 20 linhas)</label>
+      <label for="linhas">Linhas (Máximo de 20 linhas)</label>
       <input type="number"
              id="linhas"
-             min="0"
+             min="1"
              max="20"
              [(ngModel)]="linhas"
              placeholder="Ex: 3" 
              (keypress)="permitirSomenteNumeros($event, 20)"
-             (paste)="bloquearPasteNegativo($event)"/>
+             (paste)="bloquearPasteNegativo($event)" />
     </div>
 
     <div class="form-group">
-      <label for="colunas">Colunas (Maximo de 20 colunas)</label>
+      <label for="colunas">Colunas (Máximo de 20 colunas)</label>
       <input type="number"
              id="colunas"
-             min="0"
+             min="1"
              max="20"
              [(ngModel)]="colunas"
              placeholder="Ex: 4"
@@ -35,10 +35,10 @@
              placeholder="Ex: i*i*j - 10" />
     </div>
 
-    <button class="action-btn" (click)="gerarMatriz()">Gerar Matriz</button>
-    
+    <button *ngIf="matriz.length == 0" class="action-btn" (click)="gerarMatriz()">Gerar Matriz</button>
+
     <div *ngIf="matriz.length > 0" class="matriz-container">
-      <h2 class="sub-title">Resultado</h2>
+      <h2 class="sub-title">Resultado de Matriz</h2>
 
       <table class="matriz-table">
         <tr *ngFor="let linha of matriz">
@@ -46,6 +46,18 @@
         </tr>
       </table>
 
+      <button *ngIf="matrizTransposta.length == 0" class="action-btn" (click)="gerarTransposta()">Gerar Matriz Transposta</button>
     </div>
+
+    <div *ngIf="matrizTransposta.length > 0" class="matriz-container">
+      <h2 class="sub-title">Resultado de Matriz Transposta</h2>
+
+      <table class="matriz-table">
+        <tr *ngFor="let linha of matrizTransposta">
+          <td *ngFor="let cel of linha">{{ cel }}</td>
+        </tr>
+      </table>
+    </div>
+
   </div>
 </div>

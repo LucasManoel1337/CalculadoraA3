@@ -16,12 +16,12 @@ export class MatrizPage {
   regra: string = "";
 
   matriz: number[][] = [];
- 
+  matrizTransposta: number[][] = [];
+
   permitirSomenteNumeros = util.permitirSomenteNumeros;
   bloquearPasteNegativo = util.bloquearPasteNegativo;
 
   private avaliarExpressao(expr: string, i: number, j: number): number {
-    // Trocar ^ por ** (padrão JS)
     const preparado = expr
       .replace(/\^/g, '**')
       .replace(/i/g, `(${i})`)
@@ -61,5 +61,27 @@ export class MatrizPage {
     }
 
     this.matriz = nova;
+    this.matrizTransposta = []; // reset
+  }
+
+  gerarTransposta() {
+    if (this.matriz.length === 0) return;
+
+    const linhas = this.matriz.length;
+    const colunas = this.matriz[0].length;
+
+    const transposta: number[][] = [];
+
+    for (let j = 0; j < colunas; j++) {
+      const novaLinha: number[] = [];
+
+      for (let i = 0; i < linhas; i++) {
+        novaLinha.push(this.matriz[i][j]);
+      }
+
+      transposta.push(novaLinha);
+    }
+
+    this.matrizTransposta = transposta;
   }
 }
