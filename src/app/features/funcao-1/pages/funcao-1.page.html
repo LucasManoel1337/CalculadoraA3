@@ -85,27 +85,48 @@
           <svg
             [attr.viewBox]="'0 0 ' + graphWidth + ' ' + graphHeight"
             preserveAspectRatio="none">
-            <line
-              *ngIf="eixoX"
-              [attr.x1]="eixoX.x1"
-              [attr.y1]="eixoX.y1"
-              [attr.x2]="eixoX.x2"
-              [attr.y2]="eixoX.y2"
-              class="axis-line" />
-            <line
-              *ngIf="eixoY"
-              [attr.x1]="eixoY.x1"
-              [attr.y1]="eixoY.y1"
-              [attr.x2]="eixoY.x2"
-              [attr.y2]="eixoY.y2"
-              class="axis-line" />
+            @for (xTick of gridXTicks; track xTick) {
+              <line
+                [attr.x1]="toScreenX(xTick)"
+                [attr.y1]="0"
+                [attr.x2]="toScreenX(xTick)"
+                [attr.y2]="graphHeight"
+                class="grid-line" />
+            }
+            @for (yTick of gridYTicks; track yTick) {
+              <line
+                [attr.x1]="0"
+                [attr.y1]="toScreenY(yTick)"
+                [attr.x2]="graphWidth"
+                [attr.y2]="toScreenY(yTick)"
+                class="grid-line" />
+            }
+            @if (eixoX) {
+              <line
+                [attr.x1]="eixoX.x1"
+                [attr.y1]="eixoX.y1"
+                [attr.x2]="eixoX.x2"
+                [attr.y2]="eixoX.y2"
+                class="axis-line" />
+            }
+            @if (eixoY) {
+              <line
+                [attr.x1]="eixoY.x1"
+                [attr.y1]="eixoY.y1"
+                [attr.x2]="eixoY.x2"
+                [attr.y2]="eixoY.y2"
+                class="axis-line" />
+            }
             <path
               [attr.d]="graphPath"
               class="graph-line" />
           </svg>
           <div class="grafico-legenda">
             Intervalo de x: {{ intervaloX.min }} até {{ intervaloX.max }} |
-            Intervalo de y: {{ intervaloY.min }} até {{ intervaloY.max }}
+            Intervalo aproximado de y:
+            {{ intervaloY.min | number:'1.0-2' }}
+            até
+            {{ intervaloY.max | number:'1.0-2' }}
           </div>
         </div>
       </div>

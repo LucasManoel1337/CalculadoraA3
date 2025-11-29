@@ -178,6 +178,10 @@ button:hover {
   margin-top: 20px;
 }
 
+.grafico-container {
+  margin-top: 20px;
+}
+
 .grafico-titulo {
   font-size: 18px;
   margin-bottom: 8px;
@@ -193,6 +197,11 @@ button:hover {
 
 .axis-line {
   stroke: #9ca3af;
+  stroke-width: 1.2;
+}
+
+.grid-line {
+  stroke: #e5e7eb;
   stroke-width: 1;
 }
 

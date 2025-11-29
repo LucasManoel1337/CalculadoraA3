@@ -3,38 +3,35 @@
 
   <div class="content-container">
 
-    <!-- título do display -->
     <div class="display-header">Expressão</div>
 
-    <!-- display  -->
     <input type="text" class="display" [value]="display" readonly />
 
-    <!-- teclado numérico  -->
     <div class="botoes-container">
-      <button (click)="adicionar('(')">(</button>
-      <button (click)="adicionar(')')">)</button>
-      <button class="apagar-btn" (click)="apagarUltimo()">←</button>
-      <button class="calcular-btn" (click)="calcular()">=</button>
-
       <button (click)="adicionar('7')">7</button>
       <button (click)="adicionar('8')">8</button>
       <button (click)="adicionar('9')">9</button>
-      <button (click)="adicionar('/')">/</button>
+      <button class="apagar-btn" (click)="apagarUltimo()">←</button>
 
       <button (click)="adicionar('4')">4</button>
       <button (click)="adicionar('5')">5</button>
       <button (click)="adicionar('6')">6</button>
-      <button (click)="adicionar('*')">*</button>
+      <button class="clear-btn" (click)="limpar()">C</button>
 
       <button (click)="adicionar('1')">1</button>
       <button (click)="adicionar('2')">2</button>
       <button (click)="adicionar('3')">3</button>
-      <button (click)="adicionar('-')">-</button>
+      <button class="calcular-btn" (click)="calcular()">=</button>
 
-      <button class="clear-btn" (click)="limpar()">C</button>
-      <button class="zero-btn" (click)="adicionar('0')">0</button>
+      <button (click)="adicionar('0')">0</button>
       <button (click)="adicionar('.')">.</button>
+      <button (click)="adicionar('-')">-</button>
       <button (click)="adicionar('+')">+</button>
+
+      <button (click)="adicionar('(')">(</button>
+      <button (click)="adicionar(')')">)</button>
+      <button (click)="adicionar('/')">/</button>
+      <button (click)="adicionar('*')">*</button>
     </div>
 
   </div>

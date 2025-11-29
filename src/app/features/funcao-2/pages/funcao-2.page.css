@@ -189,6 +189,11 @@ button:hover {
 
 .axis-line {
   stroke: #9ca3af;
+  stroke-width: 1.2;
+}
+
+.grid-line {
+  stroke: #e5e7eb;
   stroke-width: 1;
 }
 
@@ -203,3 +208,4 @@ button:hover {
   font-size: 13px;
   color: #6b7280;
 }
+
