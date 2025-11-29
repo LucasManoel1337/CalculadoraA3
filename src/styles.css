@@ -22,3 +22,46 @@
   flex-direction: column;
   gap: 18px;
 }
+
+/* ===== MOBILE FIX REAL ===== */
+@media (max-width: 768px) {
+
+  .layout {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .content {
+    padding: 15px;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .page-container {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: block;
+  }
+
+  .titulo-pagina {
+    font-size: 22px;
+    text-align: center;
+    margin: 10px 0 20px 0;
+  }
+
+  .content-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px;
+    margin: 0;
+    border-radius: 18px;
+    box-shadow: none; /* celular fica melhor sem sombra pesada */
+    background: #fff;
+    box-sizing: border-box;
+  }
+
+  input, select {
+    width: 100%;
+  }
+}
