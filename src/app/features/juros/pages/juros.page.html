@@ -5,19 +5,19 @@
     <form [formGroup]="jurosForm" (ngSubmit)="calcular()">
       <div class="form-group">
         <label for="capital">Capital (R$)</label>
-        <input type="number" id="capital" formControlName="capital" placeholder="Ex: 1000" (keypress)="permitirSomenteNumeros($event, 20)"
+        <input type="number" id="capital" formControlName="capital" placeholder="Ex: 1000" (keypress)="permitirSomenteNumeros($event, 999999)"
              (paste)="bloquearPasteNegativo($event)"/>
       </div>
 
       <div class="form-group">
         <label for="taxa">Taxa de Juros (%)</label>
-        <input type="number" id="taxa" formControlName="taxa" placeholder="Ex: 5" (keypress)="permitirSomenteNumeros($event, 20)"
+        <input type="number" id="taxa" formControlName="taxa" placeholder="Ex: 5" (keypress)="permitirSomenteNumeros($event, 999999)"
              (paste)="bloquearPasteNegativo($event)"/>
       </div>
 
       <div class="form-group">
         <label for="periodo">Período</label>
-        <input type="number" id="periodo" formControlName="periodo" placeholder="Ex: 12" (keypress)="permitirSomenteNumeros($event, 20)"
+        <input type="number" id="periodo" formControlName="periodo" placeholder="Ex: 12" (keypress)="permitirSomenteNumeros($event, 999999)"
              (paste)="bloquearPasteNegativo($event)"/>
         <select formControlName="unidadePeriodo">
           <option value="anos">Anos</option>
