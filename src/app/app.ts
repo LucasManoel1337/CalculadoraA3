@@ -8,4 +8,14 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
-export class App {}
+export class App {
+  menuAberto = false;
+
+  toggleMenu() {
+    this.menuAberto = !this.menuAberto;
+  }
+
+  fecharMenuMobile() {
+    if (this.menuAberto) this.menuAberto = false;
+  }
+}

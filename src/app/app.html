@@ -1,6 +1,6 @@
 <div class="layout">
   <!-- MENU -->
-  <aside class="sidebar">
+  <aside class="sidebar" [class.open]="menuAberto">
     <h1 class="logo">Calculadora A3</h1>
 
     <nav class="menu">
@@ -9,7 +9,7 @@
       </a>
 
       <a routerLink="/operacoes-basicas" routerLinkActive="active">
-        Operações Basicas
+        Operações Básicas
       </a>
       
       <a routerLink="/juros" routerLinkActive="active">
@@ -34,8 +34,11 @@
     </nav>
   </aside>
 
+  <!-- BOTÃO HAMBURGUER MOBILE -->
+  <button class="hamburger" (click)="toggleMenu()">☰</button>
+
   <!-- CONTEÚDO -->
-  <main class="content">
+  <main class="content" (click)="fecharMenuMobile()">
     <router-outlet></router-outlet>
   </main>
 </div>
