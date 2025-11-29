@@ -1,1 +1,81 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, sans-serif;
+}
+
+.layout {
+  display: flex;
+  height: 100vh;
+  background: #f5f6fa;
+}
+
+.page-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titulo-pagina {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: -10px;
+  margin-top: 20px;
+}
+
+.content-container {
+  width: 600px;
+  background: #ffffff;
+  margin-top: 25px;
+  padding: 25px;
+  border-radius: 22px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ===== MOBILE FIX REAL ===== */
+@media (max-width: 768px) {
+
+  .layout {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .content {
+    padding: 15px;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .page-container {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: block;
+  }
+
+  .titulo-pagina {
+    font-size: 22px;
+    text-align: center;
+    margin: 10px 0 10px 0;
+  }
+
+  .content-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px;
+    margin: 0;
+    border-radius: 18px;
+    box-shadow: none; /* celular fica melhor sem sombra pesada */
+    background: #fff;
+    box-sizing: border-box;
+  }
+
+  input, select {
+    width: 100%;
+  }
+}

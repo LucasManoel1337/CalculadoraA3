@@ -1,11 +1,11 @@
-import { NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, NgFor],
+  imports: [RouterModule, CommonModule],
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.css'],
 })
@@ -28,4 +28,12 @@ export class HomePage {
     A proposta é criar uma calculadora/site completa contendo várias funcionalidades,
     desde cálculos básicos até operações matemáticas mais elaboradas.
   `;
+
+  tecnologias = [
+    'Angular v20',
+    'Node v22',
+    'Biblioteca ng2-charts',
+    'Biblioteca chart.js',
+    'Biblioteca mathjs'
+  ];
 }

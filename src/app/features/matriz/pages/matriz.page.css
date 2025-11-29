@@ -1,36 +1,13 @@
-/* Centraliza tudo */
-.page-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* TÍTULO CENTRALIZADO NO CONTEÚDO */
-.titulo-pagina {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
-
-/* Container do conteúdo */
-.content-container {
-  width: 600px;
-  background: #ffffff;
-  margin-top: 25px;
-  padding: 25px;
-  border-radius: 22px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.07);
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-/* Inputs padrão */
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 14px;
 }
 
 input,
@@ -41,6 +18,7 @@ select {
   font-size: 16px;
   width: 100%;
   box-sizing: border-box;
+  background: #fff;
 }
 
 input:focus,
@@ -49,8 +27,8 @@ select:focus {
   border-color: #8ab4ff;
 }
 
-/* Botão */
 .action-btn {
+  width: 100%;
   padding: 12px;
   font-size: 18px;
   border: none;
@@ -59,14 +37,13 @@ select:focus {
   color: #fff;
   cursor: pointer;
   margin-top: 10px;
-  transition: 0.2s;
+  transition: 0.2s ease;
 }
 
 .action-btn:hover {
   background: #2f63e0;
 }
 
-/* Resultado */
 .matriz-container {
   margin-top: 20px;
   text-align: center;
