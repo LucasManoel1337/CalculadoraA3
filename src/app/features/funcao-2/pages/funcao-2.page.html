@@ -1,8 +1,117 @@
 <div class="page-container">
-    <h2 class="titulo-pagina">Tela Função 2º Grau</h2>
-    <div class="content-container">
+  <h2 class="titulo-pagina">Tela Função 2º Grau</h2>
 
-        
+  <div class="content-container">
 
+    <!-- cabeçalho / fórmula -->
+    <div class="display-header">a · x² + b · x + c</div>
+
+    <!-- display principal (mostra os valores atuais) -->
+    <input type="text" class="display" [value]="display" readonly />
+
+    <!-- informação de campo selecionado -->
+    <div class="campo-atual">
+      Campo selecionado: <span>{{ campoAtual | uppercase }}</span>
     </div>
+
+    <!-- text fielfs dos coeficientes a, x, b, c -->
+    <div class="coeficientes-row">
+      <div
+        class="coef-box"
+        [class.ativo]="campoAtual === 'a'"
+        (click)="selecionarCampo('a')">
+        <div class="coef-label">a</div>
+        <div class="coef-valor">{{ aValor || '—' }}</div>
+      </div>
+
+      <div
+        class="coef-box"
+        [class.ativo]="campoAtual === 'x'"
+        (click)="selecionarCampo('x')">
+        <div class="coef-label">x</div>
+        <div class="coef-valor">{{ xValor || '—' }}</div>
+      </div>
+
+      <div
+        class="coef-box"
+        [class.ativo]="campoAtual === 'b'"
+        (click)="selecionarCampo('b')">
+        <div class="coef-label">b</div>
+        <div class="coef-valor">{{ bValor || '—' }}</div>
+      </div>
+
+      <div
+        class="coef-box"
+        [class.ativo]="campoAtual === 'c'"
+        (click)="selecionarCampo('c')">
+        <div class="coef-label">c</div>
+        <div class="coef-valor">{{ cValor || '—' }}</div>
+      </div>
+    </div>
+
+    <!-- Teclado numérico -->
+    <div class="botoes-container">
+      <button (click)="adicionar('7')">7</button>
+      <button (click)="adicionar('8')">8</button>
+      <button (click)="adicionar('9')">9</button>
+      <button class="apagar-btn" (click)="apagarUltimo()">←</button>
+
+      <button (click)="adicionar('4')">4</button>
+      <button (click)="adicionar('5')">5</button>
+      <button (click)="adicionar('6')">6</button>
+      <button class="clear-btn" (click)="limpar()">C</button>
+
+      <button (click)="adicionar('1')">1</button>
+      <button (click)="adicionar('2')">2</button>
+      <button (click)="adicionar('3')">3</button>
+      <button class="calcular-btn" (click)="calcular()">=</button>
+
+      <button class="zero-btn" (click)="adicionar('0')">0</button>
+      <button (click)="adicionar('.')">.</button>
+      <button (click)="adicionar('-')">-</button>
+    </div>
+
+    <!-- Resultado -->
+    @if (resultado) {
+      <div class="resultado-container">
+        <h2 class="sub-title">Resultado</h2>
+
+        <p class="resultado-linha">
+          f(x) = {{ valores.a }} · x² + {{ valores.b }} · x + {{ valores.c }}
+        </p>
+
+        <p class="resultado-linha">
+          Para x = {{ valores.x }}, temos f(x) = {{ resultado.y }}.
+        </p>
+
+        @if (resultado.eFuncao2Grau) {
+          <p class="resultado-linha">
+            Δ (delta) = {{ resultado.delta }}
+          </p>
+
+          <p class="resultado-linha">
+            {{ resultado.descricaoRaizes }}
+          </p>
+
+          @if (resultado.temRaizesReais) {
+            <p class="resultado-linha">
+              Raiz x₁ = {{ resultado.raiz1 }}
+            </p>
+            <p class="resultado-linha">
+              Raiz x₂ = {{ resultado.raiz2 }}
+            </p>
+          } @else {
+            <p class="resultado-linha">
+              Não possui raízes reais.
+            </p>
+          }
+        } @else {
+          <p class="resultado-linha">
+            Como a = 0, a função não é de 2º grau (vira função de 1º grau).
+          </p>
+        }
+      </div>
+    }
+
+  </div>
 </div>
