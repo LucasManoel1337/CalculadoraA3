@@ -20,6 +20,7 @@ export class TrigonometriaPage {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
   display: string = '';
+  usarGraus: boolean = true; // Alterna entre graus e radianos
 
   public lineChartData = {
     labels: [] as number[],
@@ -50,7 +51,6 @@ export class TrigonometriaPage {
   calcular() {
     if (!this.display) return;
     try {
-      // Avalia expressão direta
       this.display = evaluate(this.display).toString();
     } catch (e) {
       this.display = 'Erro';
@@ -58,7 +58,6 @@ export class TrigonometriaPage {
     }
   }
 
-  // Funções trigonométricas inserindo radianos
   sin() { this.display += 'sin('; }
   cos() { this.display += 'cos('; }
   tan() { this.display += 'tan('; }
@@ -66,7 +65,8 @@ export class TrigonometriaPage {
   acos() { this.display += 'acos('; }
   atan() { this.display += 'atan('; }
 
-  // Gerar gráfico
+  toggleGraus() { this.usarGraus = !this.usarGraus; }
+
   gerarGrafico() {
     if (!this.display) return;
 
@@ -78,10 +78,15 @@ export class TrigonometriaPage {
       for (let x = -10; x <= 10; x += step) {
         xValues.push(parseFloat(x.toFixed(2)));
 
-        // Limpa espaços e substitui x na expressão
         let expr = this.display.replace(/\s+/g, '').replace(/x/g, `(${x})`);
 
-        // Avalia
+        if (this.usarGraus) {
+          expr = expr
+            .replace(/sin\(/g, 'sin((pi/180)*')
+            .replace(/cos\(/g, 'cos((pi/180)*')
+            .replace(/tan\(/g, 'tan((pi/180)*');
+        }
+
         const y = evaluate(expr);
         yValues.push(y);
       }

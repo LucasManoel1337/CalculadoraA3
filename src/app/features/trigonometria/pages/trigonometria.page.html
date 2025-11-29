@@ -4,6 +4,13 @@
 
     <input type="text" class="display" [(ngModel)]="display" placeholder="Ex: sin(x)+0.5*cos(2*x)" />
 
+    <div style="margin: 10px 0;">
+      <label>
+        <input type="checkbox" [(ngModel)]="usarGraus" />
+        Usar graus (se desmarcado, usa radianos)
+      </label>
+    </div>
+
     <div class="botoes-container">
       <!-- Parênteses e ações -->
       <button (click)="append('(')">(</button>
