@@ -1,15 +1,15 @@
-<div class="home-container">
-  <h1>Sobre o Projeto</h1>
+<div class="page-container">
+    <h2 class="titulo-pagina">Sobre o Projeto</h2>
+    <div class="content-container">
+        <p class="descricao">
+          {{ descricao }}
+        </p>
+    </div>
 
-  <p class="descricao">
-    {{ descricao }}
-  </p>
-
-  <h2>Integrantes do grupo</h2>
-
-  <ul>
-    <li *ngFor="let membro of integrantes">
-      {{ membro }}
-    </li>
-  </ul>
+    <h3 class="titulo-pagina">Integrantes do grupo</h3>
+    <div class="content-container">
+          <li *ngFor="let membro of integrantes">
+            {{ membro }}
+          </li>
+    </div>
 </div>
