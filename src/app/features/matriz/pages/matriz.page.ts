@@ -1,6 +1,7 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { util } from '../../../core/utils/util';
 
 @Component({
   selector: 'app-matriz',
@@ -15,6 +16,9 @@ export class MatrizPage {
   regra: string = "";
 
   matriz: number[][] = [];
+ 
+  permitirSomenteNumeros = util.permitirSomenteNumeros;
+  bloquearPasteNegativo = util.bloquearPasteNegativo;
 
   private avaliarExpressao(expr: string, i: number, j: number): number {
     // Trocar ^ por ** (padrão JS)

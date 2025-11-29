@@ -4,19 +4,27 @@
   <div class="content-container">
 
     <div class="form-group">
-      <label for="linhas">Linhas</label>
+      <label for="linhas">Linhas (Maximo de 20 linhas)</label>
       <input type="number"
              id="linhas"
+             min="0"
+             max="20"
              [(ngModel)]="linhas"
-             placeholder="Ex: 3" />
+             placeholder="Ex: 3" 
+             (keypress)="permitirSomenteNumeros($event, 20)"
+             (paste)="bloquearPasteNegativo($event)"/>
     </div>
 
     <div class="form-group">
-      <label for="colunas">Colunas</label>
+      <label for="colunas">Colunas (Maximo de 20 colunas)</label>
       <input type="number"
              id="colunas"
+             min="0"
+             max="20"
              [(ngModel)]="colunas"
-             placeholder="Ex: 4" />
+             placeholder="Ex: 4"
+             (keypress)="permitirSomenteNumeros($event, 20)"
+             (paste)="bloquearPasteNegativo($event)" />
     </div>
 
     <div class="form-group">
