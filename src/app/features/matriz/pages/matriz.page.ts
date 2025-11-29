@@ -2,11 +2,12 @@ import { CommonModule, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { util } from '../../../core/utils/util';
+import { CheckboxComponent } from "../../../shared/components/checkbox/checkbox.component";
 
 @Component({
   selector: 'app-matriz',
   standalone: true,
-  imports: [NgFor, FormsModule, CommonModule],
+  imports: [NgFor, FormsModule, CommonModule, CheckboxComponent],
   templateUrl: './matriz.page.html',
   styleUrls: ['./matriz.page.css'],
 })
@@ -17,6 +18,7 @@ export class MatrizPage {
 
   matriz: number[][] = [];
   matrizTransposta: number[][] = [];
+  matrizDiagonal: boolean = false;
 
   permitirSomenteNumeros = util.permitirSomenteNumeros;
   bloquearPasteNegativo = util.bloquearPasteNegativo;
@@ -53,7 +55,14 @@ export class MatrizPage {
       const linha: number[] = [];
 
       for (let j = 1; j <= this.colunas; j++) {
-        const valor = this.avaliarExpressao(this.regra, i, j);
+        let valor = this.avaliarExpressao(this.regra, i, j);
+
+        if (isNaN(valor)) valor = 0;
+
+        if (this.matrizDiagonal && i !== j) {
+          valor = 0;
+        }
+
         linha.push(valor);
       }
 
@@ -61,7 +70,7 @@ export class MatrizPage {
     }
 
     this.matriz = nova;
-    this.matrizTransposta = []; // reset
+    this.matrizTransposta = [];
   }
 
   gerarTransposta() {
@@ -83,5 +92,10 @@ export class MatrizPage {
     }
 
     this.matrizTransposta = transposta;
+  }
+
+  resetarMatriz() {
+    this.matriz = [];
+    this.matrizTransposta = [];
   }
 }

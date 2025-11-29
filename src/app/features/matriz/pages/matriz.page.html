@@ -10,6 +10,7 @@
              min="1"
              max="20"
              [(ngModel)]="linhas"
+             (ngModelChange)="resetarMatriz()"
              placeholder="Ex: 3" 
              (keypress)="permitirSomenteNumeros($event, 20)"
              (paste)="bloquearPasteNegativo($event)" />
@@ -22,6 +23,7 @@
              min="1"
              max="20"
              [(ngModel)]="colunas"
+             (ngModelChange)="resetarMatriz()"
              placeholder="Ex: 4"
              (keypress)="permitirSomenteNumeros($event, 20)"
              (paste)="bloquearPasteNegativo($event)" />
@@ -32,10 +34,17 @@
       <input type="text"
              id="regra"
              [(ngModel)]="regra"
+             (ngModelChange)="resetarMatriz()"
              placeholder="Ex: i*i*j - 10" />
     </div>
 
-    <button *ngIf="matriz.length == 0" class="action-btn" (click)="gerarMatriz()">Gerar Matriz</button>
+    <app-checkbox
+      label="Matriz Diagonal"
+      [(checked)]="matrizDiagonal"
+      (checkedChange)="resetarMatriz()">
+    </app-checkbox>
+
+    <button class="action-btn" (click)="gerarMatriz()">Gerar Matriz</button>
 
     <div *ngIf="matriz.length > 0" class="matriz-container">
       <h2 class="sub-title">Resultado de Matriz</h2>

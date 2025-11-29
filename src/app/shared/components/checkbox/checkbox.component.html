@@ -1,0 +1,10 @@
+<div class="checkbox-group" (click)="alterarValor()">
+  <label class="checkbox-inline">
+    <span>{{ label }}</span>
+    <input
+        type="checkbox"
+        [checked]="checked"
+        (change)="alterarValor()"
+    />
+  </label>
+</div>
