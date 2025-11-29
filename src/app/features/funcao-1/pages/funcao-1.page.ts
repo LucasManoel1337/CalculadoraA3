@@ -1,57 +1,109 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+type Campo = 'a' | 'x' | 'b';
 
 @Component({
   selector: 'app-funcao-1',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule],
   templateUrl: './funcao-1.page.html',
   styleUrls: ['./funcao-1.page.css'],
 })
 export class Funcao1Page {
-  funcao1Form: FormGroup;
+  // expressão mostrada no display
+  display: string = 'a · x + b';
 
-  // valores usados para exibir na tela
+  // campo que o teclado está editando
+  campoAtual: Campo = 'a';
+
+  // valores digitados (como texto)
+  aValor: string = '';
+  xValor: string = '';
+  bValor: string = '';
+
+  // valores numéricos usados para exibir resultado
   valores = {
     a: 0,
     b: 0,
     x: 0,
   };
 
-  // resultado calculado (null quando ainda não calculou)
+  // resultado do cálculo
   resultado: {
     y: number;
     raiz: number | null;
     eFuncao1Grau: boolean;
   } | null = null;
 
-  constructor(private fb: FormBuilder) {
-    this.funcao1Form = this.fb.group({
-      a: [0, [Validators.required]],
-      b: [0, [Validators.required]],
-      x: [0, [Validators.required]],
-    });
+  selecionarCampo(campo: Campo): void {
+    this.campoAtual = campo;
   }
 
-  calcular(): void {
-    if (this.funcao1Form.invalid) {
-      alert('Preencha todos os campos corretamente!');
+  private getValorCampo(campo: Campo): string {
+    if (campo === 'a') return this.aValor;
+    if (campo === 'x') return this.xValor;
+    return this.bValor;
+  }
+
+  private setValorCampo(campo: Campo, valor: string): void {
+    if (campo === 'a') this.aValor = valor;
+    else if (campo === 'x') this.xValor = valor;
+    else this.bValor = valor;
+  }
+
+  private atualizarDisplay(): void {
+    const aTxt = this.aValor !== '' ? this.aValor : 'a';
+    const xTxt = this.xValor !== '' ? this.xValor : 'x';
+    const bTxt = this.bValor !== '' ? this.bValor : 'b';
+
+    this.display = `${aTxt} · ${xTxt} + ${bTxt}`;
+  }
+
+  adicionar(caractere: string): void {
+    const atual = this.getValorCampo(this.campoAtual);
+
+    // evita dois pontos decimais no mesmo número
+    if (caractere === '.' && atual.includes('.')) {
       return;
     }
 
-    const { a, b, x } = this.funcao1Form.value;
+    const novo = atual + caractere;
+    this.setValorCampo(this.campoAtual, novo);
+    this.atualizarDisplay();
+  }
 
-    const aNum = Number(a);
-    const bNum = Number(b);
-    const xNum = Number(x);
+  apagarUltimo(): void {
+    const atual = this.getValorCampo(this.campoAtual);
+    const novo = atual.slice(0, -1);
+    this.setValorCampo(this.campoAtual, novo);
+    this.atualizarDisplay();
+  }
 
-    this.valores = { a: aNum, b: bNum, x: xNum };
+  limpar(): void {
+    this.aValor = '';
+    this.xValor = '';
+    this.bValor = '';
+    this.resultado = null;
+    this.atualizarDisplay();
+  }
 
-    const y = aNum * xNum + bNum;
+  calcular(): void {
+    const a = Number(this.aValor.replace(',', '.'));
+    const x = Number(this.xValor.replace(',', '.'));
+    const b = Number(this.bValor.replace(',', '.'));
 
-    // Se a = 0, não é função do 1º grau
-    if (aNum === 0) {
+    if (isNaN(a) || isNaN(b) || isNaN(x)) {
+      alert('Preencha todos os valores (a, x e b) com números válidos.');
+      return;
+    }
+
+    this.valores = { a, b, x };
+
+    const y = a * x + b;
+
+    if (a === 0) {
+      // não é função de 1º grau
       this.resultado = {
         y,
         raiz: null,
@@ -60,12 +112,15 @@ export class Funcao1Page {
       return;
     }
 
-    const raiz = -bNum / aNum;
+    const raiz = -b / a;
 
     this.resultado = {
       y,
       raiz,
       eFuncao1Grau: true,
     };
+
+    // atualizar display com os valores finais
+    this.atualizarDisplay();
   }
 }

@@ -3,64 +3,91 @@
 
   <div class="content-container">
 
-    <!-- FORMULÁRIO -->
-    <form [formGroup]="funcao1Form" (ngSubmit)="calcular()">
-      <div class="form-group">
-        <label for="a">Coeficiente a</label>
-        <input
-          type="number"
-          id="a"
-          formControlName="a"
-          placeholder="Ex: 2" />
-      </div>
+    <!-- cabeçalho / fórmula -->
+    <div class="display-header">a · x + b</div>
 
-      <div class="form-group">
-        <label for="b">Coeficiente b</label>
-        <input
-          type="number"
-          id="b"
-          formControlName="b"
-          placeholder="Ex: -4" />
-      </div>
+    <!-- display principal (Esse é o que aparece os valores) -->
+    <input type="text" class="display" [value]="display" readonly />
 
-      <div class="form-group">
-        <label for="x">Valor de x</label>
-        <input
-          type="number"
-          id="x"
-          formControlName="x"
-          placeholder="Ex: 3" />
-      </div>
-
-      <button type="submit" class="action-btn">
-        Calcular
-      </button>
-    </form>
-
-    <!-- RESULTADO -->
-    <div *ngIf="resultado" class="resultado-container">
-      <h2 class="sub-title">Resultado</h2>
-
-      <p class="resultado-linha">
-        f(x) = {{ valores.a }} · x + {{ valores.b }}
-      </p>
-
-      <p class="resultado-linha">
-        Para x = {{ valores.x }}, temos f(x) = {{ resultado.y }}.
-      </p>
-
-      <p
-        class="resultado-linha"
-        *ngIf="resultado.eFuncao1Grau; else naoEhFuncao1Grau">
-        Raiz da função (f(x) = 0): x = {{ resultado.raiz }}.
-      </p>
-
-      <ng-template #naoEhFuncao1Grau>
-        <p class="resultado-linha">
-          Como a = 0, não é uma função do 1º grau (não há raiz definida).
-        </p>
-      </ng-template>
+    <!-- informação de campo selecionado pro caba clicar -->
+    <div class="campo-atual">
+      Campo selecionado: <span>{{ campoAtual | uppercase }}</span>
     </div>
+
+    <!-- campos dos coeficientes a, x, b -->
+    <div class="coeficientes-row">
+      <div
+        class="coef-box"
+        [class.ativo]="campoAtual === 'a'"
+        (click)="selecionarCampo('a')">
+        <div class="coef-label">a</div>
+        <div class="coef-valor">{{ aValor || '—' }}</div>
+      </div>
+
+      <div
+        class="coef-box"
+        [class.ativo]="campoAtual === 'x'"
+        (click)="selecionarCampo('x')">
+        <div class="coef-label">x</div>
+        <div class="coef-valor">{{ xValor || '—' }}</div>
+      </div>
+
+      <div
+        class="coef-box"
+        [class.ativo]="campoAtual === 'b'"
+        (click)="selecionarCampo('b')">
+        <div class="coef-label">b</div>
+        <div class="coef-valor">{{ bValor || '—' }}</div>
+      </div>
+    </div>
+
+    <!-- teclado -->
+    <div class="botoes-container">
+      <button (click)="adicionar('7')">7</button>
+      <button (click)="adicionar('8')">8</button>
+      <button (click)="adicionar('9')">9</button>
+      <button class="apagar-btn" (click)="apagarUltimo()">←</button>
+
+      <button (click)="adicionar('4')">4</button>
+      <button (click)="adicionar('5')">5</button>
+      <button (click)="adicionar('6')">6</button>
+      <button class="clear-btn" (click)="limpar()">C</button>
+
+      <button (click)="adicionar('1')">1</button>
+      <button (click)="adicionar('2')">2</button>
+      <button (click)="adicionar('3')">3</button>
+      <button class="calcular-btn" (click)="calcular()">=</button>
+
+      <button class="zero-btn" (click)="adicionar('0')">0</button>
+      <button (click)="adicionar('.')">.</button>
+      <button (click)="selecionarCampo('a')">A</button>
+      <button (click)="selecionarCampo('x')">X</button>
+    </div>
+
+    <!-- resultado (MANTER ESSE) -->
+    @if (resultado) {
+      <div class="resultado-container">
+        <h2 class="sub-title">Resultado</h2>
+
+        <p class="resultado-linha">
+          f(x) = {{ valores.a }} · x + {{ valores.b }}
+        </p>
+
+        <p class="resultado-linha">
+          Para x = {{ valores.x }}, temos f(x) = {{ resultado.y }}.
+        </p>
+
+        @if (resultado.eFuncao1Grau) {
+          <p class="resultado-linha">
+            Raiz da função (f(x) = 0): x = {{ resultado.raiz }}.
+          </p>
+        } @else {
+          <p class="resultado-linha">
+            Como a = 0, não é uma função do 1º grau (não há raiz definida).
+          </p>
+        }
+      </div>
+    }
 
   </div>
 </div>
