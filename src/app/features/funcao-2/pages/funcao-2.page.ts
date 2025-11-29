@@ -3,6 +3,23 @@ import { Component } from '@angular/core';
 
 type Campo = 'a' | 'x' | 'b' | 'c';
 
+interface ResultadoFuncao2Grau {
+  y: number;
+  delta: number | null;
+  raiz1: number | null;
+  raiz2: number | null;
+  temRaizesReais: boolean;
+  descricaoRaizes: string;
+  eFuncao2Grau: boolean;
+}
+
+interface Eixo {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+}
+
 @Component({
   selector: 'app-funcao-2',
   standalone: true,
@@ -11,22 +28,16 @@ type Campo = 'a' | 'x' | 'b' | 'c';
   styleUrls: ['./funcao-2.page.css'],
 })
 export class Funcao2Page {
-  // expressão mostrada no display
   display: string = 'a · x² + b · x + c';
-
-  // campo que o teclado está editando
   campoAtual: Campo = 'a';
 
-  // valores digitados (O texto)
   aValor: string = '';
   xValor: string = '';
   bValor: string = '';
   cValor: string = '';
 
-  // limite de dígitos (sem contar o operador)
   private readonly MAX_DIGITOS = 12;
 
-  // valores numéricos usados no resultado
   valores = {
     a: 0,
     b: 0,
@@ -34,16 +45,15 @@ export class Funcao2Page {
     x: 0,
   };
 
-  // resultado do cálculo
-  resultado: {
-    y: number;
-    delta: number | null;
-    raiz1: number | null;
-    raiz2: number | null;
-    temRaizesReais: boolean;
-    descricaoRaizes: string;
-    eFuncao2Grau: boolean;
-  } | null = null;
+  resultado: ResultadoFuncao2Grau | null = null;
+
+  graphWidth = 320;
+  graphHeight = 220;
+  intervaloX = { min: -10, max: 10 };
+  intervaloY = { min: -10, max: 10 };
+  graphPath: string = '';
+  eixoX: Eixo | null = null;
+  eixoY: Eixo | null = null;
 
   selecionarCampo(campo: Campo): void {
     this.campoAtual = campo;
@@ -65,17 +75,14 @@ export class Funcao2Page {
 
   private atualizarDisplay(): void {
     const aTxt = this.aValor !== '' ? this.aValor : 'a';
-    const xTxt = this.xValor !== '' ? this.xValor : 'x';
     const bTxt = this.bValor !== '' ? this.bValor : 'b';
     const cTxt = this.cValor !== '' ? this.cValor : 'c';
-
     this.display = `${aTxt} · x² + ${bTxt} · x + ${cTxt}`;
   }
 
   adicionar(caractere: string): void {
     let atual = this.getValorCampo(this.campoAtual);
 
-    // botão de sinal: alterna "menos" no início
     if (caractere === '-') {
       if (atual.startsWith('-')) {
         atual = atual.slice(1);
@@ -87,12 +94,10 @@ export class Funcao2Page {
       return;
     }
 
-    // evita dois pontos decimais no mesmo número
     if (caractere === '.' && atual.includes('.')) {
       return;
     }
 
-    // respeita limite de dígitos (sem contar o menos)
     const semSinal = atual.startsWith('-') ? atual.slice(1) : atual;
     if (semSinal.length >= this.MAX_DIGITOS) {
       return;
@@ -116,6 +121,10 @@ export class Funcao2Page {
     this.bValor = '';
     this.cValor = '';
     this.resultado = null;
+    this.graphPath = '';
+    this.eixoX = null;
+    this.eixoY = null;
+    this.intervaloY = { min: -10, max: 10 };
     this.atualizarDisplay();
   }
 
@@ -134,7 +143,6 @@ export class Funcao2Page {
 
     const y = a * x * x + b * x + c;
 
-    // caso a = 0, não é função de 2º grau
     if (a === 0) {
       this.resultado = {
         y,
@@ -146,6 +154,7 @@ export class Funcao2Page {
           'Como a = 0, a função não é de 2º grau (é de 1º grau ou constante).',
         eFuncao2Grau: false,
       };
+      this.atualizarGrafico(a, b, c);
       return;
     }
 
@@ -180,6 +189,80 @@ export class Funcao2Page {
       eFuncao2Grau: true,
     };
 
-    this.atualizarDisplay();
+    this.atualizarGrafico(a, b, c);
+  }
+
+  private toScreenX(x: number): number {
+    const rangeX = this.intervaloX.max - this.intervaloX.min || 1;
+    return ((x - this.intervaloX.min) / rangeX) * this.graphWidth;
+  }
+
+  private toScreenY(y: number): number {
+    const rangeY = this.intervaloY.max - this.intervaloY.min || 1;
+    const normalized = (y - this.intervaloY.min) / rangeY;
+    return this.graphHeight - normalized * this.graphHeight;
+  }
+
+  private atualizarGrafico(a: number, b: number, c: number): void {
+    const pontosX: number[] = [];
+    const pontosY: number[] = [];
+    const passos = 80;
+    const minX = this.intervaloX.min;
+    const maxX = this.intervaloX.max;
+    const rangeX = maxX - minX;
+
+    for (let i = 0; i <= passos; i++) {
+      const t = i / passos;
+      const x = minX + rangeX * t;
+      const y = a * x * x + b * x + c;
+      pontosX.push(x);
+      pontosY.push(y);
+    }
+
+    let minY = Math.min(...pontosY);
+    let maxY = Math.max(...pontosY);
+
+    if (minY === maxY) {
+      minY -= 1;
+      maxY += 1;
+    }
+
+    const margem = (maxY - minY) * 0.1;
+    this.intervaloY = {
+      min: minY - margem,
+      max: maxY + margem,
+    };
+
+    let d = '';
+    for (let i = 0; i < pontosX.length; i++) {
+      const sx = this.toScreenX(pontosX[i]);
+      const sy = this.toScreenY(pontosY[i]);
+      d += i === 0 ? `M ${sx} ${sy}` : ` L ${sx} ${sy}`;
+    }
+    this.graphPath = d;
+
+    if (this.intervaloY.min <= 0 && this.intervaloY.max >= 0) {
+      const sy0 = this.toScreenY(0);
+      this.eixoX = {
+        x1: 0,
+        y1: sy0,
+        x2: this.graphWidth,
+        y2: sy0,
+      };
+    } else {
+      this.eixoX = null;
+    }
+
+    if (this.intervaloX.min <= 0 && this.intervaloX.max >= 0) {
+      const sx0 = this.toScreenX(0);
+      this.eixoY = {
+        x1: sx0,
+        y1: 0,
+        x2: sx0,
+        y2: this.graphHeight,
+      };
+    } else {
+      this.eixoY = null;
+    }
   }
 }

@@ -3,18 +3,14 @@
 
   <div class="content-container">
 
-    <!-- cabeçalho / fórmula -->
     <div class="display-header">a · x + b</div>
 
-    <!-- display principal -->
     <input type="text" class="display" [value]="display" readonly />
 
-    <!-- informação de campo -->
     <div class="campo-atual">
       Campo selecionado: <span>{{ campoAtual | uppercase }}</span>
     </div>
 
-    <!-- text field dos coeficientes a, x, b -->
     <div class="coeficientes-row">
       <div
         class="coef-box"
@@ -41,7 +37,6 @@
       </div>
     </div>
 
-    <!-- Teclado númerico -->
     <div class="botoes-container">
       <button (click)="adicionar('7')">7</button>
       <button (click)="adicionar('8')">8</button>
@@ -63,7 +58,6 @@
       <button (click)="adicionar('-')">-</button>
     </div>
 
-    <!-- Resultado -->
     @if (resultado) {
       <div class="resultado-container">
         <h2 class="sub-title">Resultado</h2>
@@ -85,6 +79,35 @@
             Como a = 0, não é uma função do 1º grau (não há raiz definida).
           </p>
         }
+
+        <div class="grafico-container">
+          <h3 class="grafico-titulo">Gráfico da função</h3>
+          <svg
+            [attr.viewBox]="'0 0 ' + graphWidth + ' ' + graphHeight"
+            preserveAspectRatio="none">
+            <line
+              *ngIf="eixoX"
+              [attr.x1]="eixoX.x1"
+              [attr.y1]="eixoX.y1"
+              [attr.x2]="eixoX.x2"
+              [attr.y2]="eixoX.y2"
+              class="axis-line" />
+            <line
+              *ngIf="eixoY"
+              [attr.x1]="eixoY.x1"
+              [attr.y1]="eixoY.y1"
+              [attr.x2]="eixoY.x2"
+              [attr.y2]="eixoY.y2"
+              class="axis-line" />
+            <path
+              [attr.d]="graphPath"
+              class="graph-line" />
+          </svg>
+          <div class="grafico-legenda">
+            Intervalo de x: {{ intervaloX.min }} até {{ intervaloX.max }} |
+            Intervalo de y: {{ intervaloY.min }} até {{ intervaloY.max }}
+          </div>
+        </div>
       </div>
     }
 

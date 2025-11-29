@@ -3,18 +3,14 @@
 
   <div class="content-container">
 
-    <!-- cabeçalho / fórmula -->
     <div class="display-header">a · x² + b · x + c</div>
 
-    <!-- display principal (mostra os valores atuais) -->
     <input type="text" class="display" [value]="display" readonly />
 
-    <!-- informação de campo selecionado -->
     <div class="campo-atual">
       Campo selecionado: <span>{{ campoAtual | uppercase }}</span>
     </div>
 
-    <!-- text fielfs dos coeficientes a, x, b, c -->
     <div class="coeficientes-row">
       <div
         class="coef-box"
@@ -49,7 +45,6 @@
       </div>
     </div>
 
-    <!-- Teclado numérico -->
     <div class="botoes-container">
       <button (click)="adicionar('7')">7</button>
       <button (click)="adicionar('8')">8</button>
@@ -71,7 +66,6 @@
       <button (click)="adicionar('-')">-</button>
     </div>
 
-    <!-- Resultado -->
     @if (resultado) {
       <div class="resultado-container">
         <h2 class="sub-title">Resultado</h2>
@@ -110,6 +104,40 @@
             Como a = 0, a função não é de 2º grau (vira função de 1º grau).
           </p>
         }
+
+        <div class="grafico-container">
+          <h3 class="grafico-titulo">Gráfico da função</h3>
+          <svg
+            [attr.viewBox]="'0 0 ' + graphWidth + ' ' + graphHeight"
+            preserveAspectRatio="none">
+            @if (eixoX) {
+              <line
+                [attr.x1]="eixoX.x1"
+                [attr.y1]="eixoX.y1"
+                [attr.x2]="eixoX.x2"
+                [attr.y2]="eixoX.y2"
+                class="axis-line" />
+            }
+            @if (eixoY) {
+              <line
+                [attr.x1]="eixoY.x1"
+                [attr.y1]="eixoY.y1"
+                [attr.x2]="eixoY.x2"
+                [attr.y2]="eixoY.y2"
+                class="axis-line" />
+            }
+            <path
+              [attr.d]="graphPath"
+              class="graph-line" />
+          </svg>
+          <div class="grafico-legenda">
+            Intervalo de x: {{ intervaloX.min }} até {{ intervaloX.max }} |
+            Intervalo aproximado de y:
+            {{ intervaloY.min | number:'1.0-2' }}
+            até
+            {{ intervaloY.max | number:'1.0-2' }}
+          </div>
+        </div>
       </div>
     }
 
