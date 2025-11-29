@@ -21,7 +21,8 @@
 .titulo-pagina {
   font-size: 28px;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: -10px;
+  margin-top: 20px;
 }
 
 .content-container {
@@ -60,7 +61,7 @@
   .titulo-pagina {
     font-size: 22px;
     text-align: center;
-    margin: 10px 0 20px 0;
+    margin: 10px 0 10px 0;
   }
 
   .content-container {
