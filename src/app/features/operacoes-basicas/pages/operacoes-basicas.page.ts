@@ -27,9 +27,9 @@ export class OperacoesBasicasPage {
 
   calcular() {
     try {
-      this.display = eval(this.display);
-    } catch {
-      this.display = 'Erro';
+      this.display = new Function(`return ${this.display}`)();
+    } catch (e) {
+      console.error("Expressão inválida", e);
     }
   }
 

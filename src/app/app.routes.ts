@@ -11,8 +11,8 @@ export const routes: Routes = [
     loadComponent: () => import('./features/juros/pages/juros.page').then(m => m.JurosPage)
   },
   { 
-    path: 'regra-de-tres', 
-    loadComponent: () => import('./features/regra-de-tres/pages/regra-de-tres.page').then(m => m.RegraDeTresPage)
+    path: 'trigonometria', 
+    loadComponent: () => import('./features/trigonometria/pages/trigonometria.page').then(m => m.TrigonometriaPage)
   },
   { 
     path: 'matriz', 
