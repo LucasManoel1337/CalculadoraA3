@@ -6,15 +6,15 @@
     <!-- cabeçalho / fórmula -->
     <div class="display-header">a · x + b</div>
 
-    <!-- display principal (Esse é o que aparece os valores) -->
+    <!-- display principal -->
     <input type="text" class="display" [value]="display" readonly />
 
-    <!-- informação de campo selecionado pro caba clicar -->
+    <!-- informação de campo -->
     <div class="campo-atual">
       Campo selecionado: <span>{{ campoAtual | uppercase }}</span>
     </div>
 
-    <!-- campos dos coeficientes a, x, b -->
+    <!-- text field dos coeficientes a, x, b -->
     <div class="coeficientes-row">
       <div
         class="coef-box"
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <!-- teclado -->
+    <!-- Teclado númerico -->
     <div class="botoes-container">
       <button (click)="adicionar('7')">7</button>
       <button (click)="adicionar('8')">8</button>
@@ -60,11 +60,10 @@
 
       <button class="zero-btn" (click)="adicionar('0')">0</button>
       <button (click)="adicionar('.')">.</button>
-      <button (click)="selecionarCampo('a')">A</button>
-      <button (click)="selecionarCampo('x')">X</button>
+      <button (click)="adicionar('-')">-</button>
     </div>
 
-    <!-- resultado (MANTER ESSE) -->
+    <!-- Resultado -->
     @if (resultado) {
       <div class="resultado-container">
         <h2 class="sub-title">Resultado</h2>

@@ -61,7 +61,21 @@ export class Funcao1Page {
   }
 
   adicionar(caractere: string): void {
-    const atual = this.getValorCampo(this.campoAtual);
+    let atual = this.getValorCampo(this.campoAtual);
+
+    // botão de sinal: caractere '-' → alterna o sinal
+    if (caractere === '-') {
+      if (atual.startsWith('-')) {
+        // se já é negativo, remove o '-'
+        atual = atual.slice(1);
+      } else {
+        // se não tem nada ou é positivo, coloca '-' na frente
+        atual = '-' + atual;
+      }
+      this.setValorCampo(this.campoAtual, atual);
+      this.atualizarDisplay();
+      return;
+    }
 
     // evita dois pontos decimais no mesmo número
     if (caractere === '.' && atual.includes('.')) {
@@ -120,7 +134,6 @@ export class Funcao1Page {
       eFuncao1Grau: true,
     };
 
-    // atualizar display com os valores finais
     this.atualizarDisplay();
   }
 }
