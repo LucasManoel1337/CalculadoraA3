@@ -1,25 +1,65 @@
-.display {
-  width: 96%;
-  height: 50px;
-  font-size: 24px;
-  text-align: right;
-  padding: 5px 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+/* Layout geral – mesmo card das outras calculadoras */
+
+.page-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+.titulo-pagina {
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 20px;
+}
+
+.content-container {
+  width: 600px;
+  background: #ffffff;
+  margin-top: 25px;
+  padding: 25px;
+  border-radius: 22px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.07);
+}
+
+/* Display */
+
+.display-header {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.display {
+  width: 100%;
+  height: 50px;
+  font-size: 20px;
+  text-align: left;
+  padding: 5px 12px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Teclado */
 
 .botoes-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
+  margin-top: 10px;
 }
 
 button {
   padding: 15px;
   font-size: 18px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   background-color: #007bff;
   color: white;
   cursor: pointer;
@@ -30,11 +70,18 @@ button:hover {
   background-color: #0056b3;
 }
 
+/* 0 ocupa duas colunas, igual às outras telas */
+.zero-btn {
+  grid-column: span 2;
+}
+
+/* Cores especiais – mesmo padrão usado nas outras calculadoras */
+
 .clear-btn {
   background-color: #dc3545;
 }
 
-.clear-btn:hover  {
+.clear-btn:hover {
   background-color: #6d1720;
 }
 
@@ -42,7 +89,7 @@ button:hover {
   background-color: #25b900;
 }
 
-.calcular-btn:hover  {
+.calcular-btn:hover {
   background-color: #176803;
 }
 
@@ -50,6 +97,7 @@ button:hover {
   background-color: #00eeff;
 }
 
-.apagar-btn:hover  {
+.apagar-btn:hover {
   background-color: #028a94;
 }
+
