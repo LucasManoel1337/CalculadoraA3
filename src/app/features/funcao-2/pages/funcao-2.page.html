@@ -110,6 +110,22 @@
           <svg
             [attr.viewBox]="'0 0 ' + graphWidth + ' ' + graphHeight"
             preserveAspectRatio="none">
+            @for (xTick of gridXTicks; track xTick) {
+              <line
+                [attr.x1]="toScreenX(xTick)"
+                [attr.y1]="0"
+                [attr.x2]="toScreenX(xTick)"
+                [attr.y2]="graphHeight"
+                class="grid-line" />
+            }
+            @for (yTick of gridYTicks; track yTick) {
+              <line
+                [attr.x1]="0"
+                [attr.y1]="toScreenY(yTick)"
+                [attr.x2]="graphWidth"
+                [attr.y2]="toScreenY(yTick)"
+                class="grid-line" />
+            }
             @if (eixoX) {
               <line
                 [attr.x1]="eixoX.x1"

@@ -49,6 +49,9 @@ export class Funcao1Page {
   eixoX: Eixo | null = null;
   eixoY: Eixo | null = null;
 
+  gridXTicks = [-10, -5, 0, 5, 10];
+  gridYTicks = [-10, -5, 0, 5, 10];
+
   selecionarCampo(campo: Campo): void {
     this.campoAtual = campo;
   }
@@ -115,6 +118,7 @@ export class Funcao1Page {
     this.graphPath = '';
     this.eixoX = null;
     this.eixoY = null;
+    this.intervaloY = { min: -10, max: 10 };
     this.atualizarDisplay();
   }
 
@@ -153,30 +157,54 @@ export class Funcao1Page {
     this.atualizarGrafico(a, b);
   }
 
-  private toScreenX(x: number): number {
-    const rangeX = this.intervaloX.max - this.intervaloX.min;
-    if (rangeX === 0) return this.graphWidth / 2;
+  toScreenX(x: number): number {
+    const rangeX = this.intervaloX.max - this.intervaloX.min || 1;
     return ((x - this.intervaloX.min) / rangeX) * this.graphWidth;
   }
 
-  private toScreenY(y: number): number {
+  toScreenY(y: number): number {
     const rangeY = this.intervaloY.max - this.intervaloY.min || 1;
     const normalized = (y - this.intervaloY.min) / rangeY;
     return this.graphHeight - normalized * this.graphHeight;
   }
 
   private atualizarGrafico(a: number, b: number): void {
-    const x1 = this.intervaloX.min;
-    const x2 = this.intervaloX.max;
-    const y1 = a * x1 + b;
-    const y2 = a * x2 + b;
+    const pontosX: number[] = [];
+    const pontosY: number[] = [];
+    const passos = 40;
+    const minX = this.intervaloX.min;
+    const maxX = this.intervaloX.max;
+    const rangeX = maxX - minX;
 
-    const sx1 = this.toScreenX(x1);
-    const sy1 = this.toScreenY(y1);
-    const sx2 = this.toScreenX(x2);
-    const sy2 = this.toScreenY(y2);
+    for (let i = 0; i <= passos; i++) {
+      const t = i / passos;
+      const x = minX + rangeX * t;
+      const y = a * x + b;
+      pontosX.push(x);
+      pontosY.push(y);
+    }
 
-    this.graphPath = `M ${sx1} ${sy1} L ${sx2} ${sy2}`;
+    let minY = Math.min(...pontosY);
+    let maxY = Math.max(...pontosY);
+
+    if (minY === maxY) {
+      minY -= 1;
+      maxY += 1;
+    }
+
+    const margem = (maxY - minY) * 0.1;
+    this.intervaloY = {
+      min: minY - margem,
+      max: maxY + margem,
+    };
+
+    let d = '';
+    for (let i = 0; i < pontosX.length; i++) {
+      const sx = this.toScreenX(pontosX[i]);
+      const sy = this.toScreenY(pontosY[i]);
+      d += i === 0 ? `M ${sx} ${sy}` : ` L ${sx} ${sy}`;
+    }
+    this.graphPath = d;
 
     if (this.intervaloY.min <= 0 && this.intervaloY.max >= 0) {
       const sy0 = this.toScreenY(0);

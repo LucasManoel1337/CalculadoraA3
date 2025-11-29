@@ -55,6 +55,9 @@ export class Funcao2Page {
   eixoX: Eixo | null = null;
   eixoY: Eixo | null = null;
 
+  gridXTicks = [-10, -5, 0, 5, 10];
+  gridYTicks = [-10, -5, 0, 5, 10];
+
   selecionarCampo(campo: Campo): void {
     this.campoAtual = campo;
   }
@@ -192,12 +195,12 @@ export class Funcao2Page {
     this.atualizarGrafico(a, b, c);
   }
 
-  private toScreenX(x: number): number {
+  toScreenX(x: number): number {
     const rangeX = this.intervaloX.max - this.intervaloX.min || 1;
     return ((x - this.intervaloX.min) / rangeX) * this.graphWidth;
   }
 
-  private toScreenY(y: number): number {
+  toScreenY(y: number): number {
     const rangeY = this.intervaloY.max - this.intervaloY.min || 1;
     const normalized = (y - this.intervaloY.min) / rangeY;
     return this.graphHeight - normalized * this.graphHeight;
