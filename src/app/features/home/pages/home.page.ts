@@ -32,5 +32,8 @@ export class HomePage {
   tecnologias = [
     'Angular v20',
     'Node v22',
+    'Biblioteca ng2-charts',
+    'Biblioteca chart.js',
+    'Biblioteca mathjs'
   ];
 }

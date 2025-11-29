@@ -5,7 +5,6 @@ import { BaseChartDirective } from 'ng2-charts';
 import { Chart, CategoryScale, LinearScale, LineElement, PointElement, LineController, Title, Tooltip, Legend } from 'chart.js';
 import { evaluate } from 'mathjs';
 
-// Registrar Chart.js
 Chart.register(CategoryScale, LinearScale, LineElement, PointElement, LineController, Title, Tooltip, Legend);
 
 @Component({
@@ -20,7 +19,7 @@ export class TrigonometriaPage {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
   display: string = '';
-  usarGraus: boolean = true; // Alterna entre graus e radianos
+  usarGraus: boolean = true;
 
   public lineChartData = {
     labels: [] as number[],

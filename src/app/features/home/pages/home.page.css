@@ -1,12 +1,12 @@
 ul {
   background: #ffffff;
-  padding: 20px 25px;
   border-radius: 12px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
   border: 1px solid #ececec;
 }
 
 li {
-  padding: 8px 0;
+  margin-top: -8px;
+  margin-left: 10px;
   font-size: 16px;
 }
