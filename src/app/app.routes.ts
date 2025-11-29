@@ -7,10 +7,6 @@ export const routes: Routes = [
     component: HomePage
   },
   { 
-    path: 'imc', 
-    loadComponent: () => import('./features/imc/pages/imc.page').then(m => m.ImcPage)
-  },
-  { 
     path: 'juros', 
     loadComponent: () => import('./features/juros/pages/juros.page').then(m => m.JurosPage)
   },
