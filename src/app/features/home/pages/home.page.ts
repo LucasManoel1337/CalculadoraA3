@@ -1,11 +1,11 @@
-import { NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, NgFor],
+  imports: [RouterModule, CommonModule],
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.css'],
 })
