@@ -1,0 +1,39 @@
+<div class="page-container">
+  <h2 class="titulo-pagina">Divisão de Polinômios</h2>
+
+  <div class="content-container">
+
+    <form [formGroup]="polyForm" (ngSubmit)="dividir()">
+
+      <div class="form-group">
+        <label for="dividendo">Dividendo</label>
+        <input 
+          type="text"
+          id="dividendo"
+          formControlName="dividendo"
+          placeholder="Ex: 2x^3 + 5x^2 - 3x + 1" />
+      </div>
+
+      <div class="form-group">
+        <label for="divisor">Divisor</label>
+        <input 
+          type="text"
+          id="divisor"
+          formControlName="divisor"
+          placeholder="Ex: x + 2" />
+      </div>
+
+      <button type="submit" class="action-btn">Calcular</button>
+    </form>
+
+    <div *ngIf="resultado" class="matriz-container">
+      <h2 class="sub-title">Resultado</h2>
+
+      <div class="resultado-box">
+        <p><strong>Quociente:</strong> {{ resultado.quociente }}</p>
+        <p><strong>Resto:</strong> {{ resultado.resto }}</p>
+      </div>
+    </div>
+
+  </div>
+</div>

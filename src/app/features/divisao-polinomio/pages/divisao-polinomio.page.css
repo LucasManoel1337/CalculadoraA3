@@ -1,0 +1,46 @@
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 14px;
+}
+
+input,
+select {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #dcdcdc;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #8ab4ff;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  background: #4a7dff;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.2s ease;
+}
+
+.action-btn:hover {
+  background: #2f63e0;
+}
+

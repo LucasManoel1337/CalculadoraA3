@@ -30,4 +30,12 @@ export const routes: Routes = [
     path: 'funcao-2', 
     loadComponent: () => import('./features/funcao-2/pages/funcao-2.page').then(m => m.Funcao2Page)
   },
+  { 
+    path: 'multiplicar-polinomio', 
+    loadComponent: () => import('./features/multiplicar-polinomio/pages/multiplicar-polinomio.page').then(m => m.MultiplicarPolinomioPage)
+  },
+  { 
+    path: 'dividir-polinomio', 
+    loadComponent: () => import('./features/divisao-polinomio/pages/divisao-polinomio.page').then(m => m.DivisaoPolinomiosPage)
+  },
 ];
