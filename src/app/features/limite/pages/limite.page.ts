@@ -1,17 +1,23 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { util } from '../../../core/utils/util';
+import { CommonModule } from '@angular/common';
+import { DisplayComponent } from '../../../shared/components/display/display.component';
+
+type Campo = 'expressao' | 'valorX';
 
 @Component({
   selector: 'app-limites',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, DisplayComponent],
   templateUrl: './limite.page.html',
   styleUrls: ['./limite.page.css']
 })
 export class LimitesPage {
-  expressao = '';
-  valorX = '';
+  campoAtual: Campo = 'expressao';
+
+  expressaoStr = '';
+  valorXStr = '';
   resultado = '';
   debug = '';
 
@@ -223,18 +229,18 @@ export class LimitesPage {
     this.debug = '';
     this.resultado = '';
 
-    if (!this.expressao || this.valorX === '') {
+    if (!this.expressaoStr || this.valorXStr === '') {
       this.resultado = 'Preencha todos os campos!';
       return;
     }
 
-    const a = Number(this.valorX);
+    const a = Number(this.valorXStr);
     if (isNaN(a)) {
       this.resultado = 'Valor de a inválido';
       return;
     }
 
-    let raw = this.expressao.trim();
+    let raw = this.expressaoStr.trim();
 
     // Casos especiais (sin(x)/x em x=0)
     const sc = this.trySpecialCases(raw, a);
@@ -291,18 +297,68 @@ export class LimitesPage {
     }
   }
 
-  adicionar(valor: string) {
-    this.expressao += valor;
+  adicionar(caractere: string): void {
+    let atual = this.getValorCampo(this.campoAtual);
+
+    // Lógica para garantir sintaxe limpa
+    if (['+', '-'].includes(caractere)) {
+      // Evita múltiplos operadores seguidos no final (ex: x++ ou x+-)
+      if (['+', '-', '*', '^'].includes(atual.slice(-1))) {
+        // Substitui o último caractere pelo novo operador
+        atual = atual.slice(0, -1); 
+      }
+      // Adiciona espaço antes do + ou - se não estiver no início, para facilitar a leitura.
+      if (atual.length > 0 && caractere === '+') {
+         atual += ' + ';
+      } else if (atual.length > 0 && caractere === '-') {
+         // Adiciona espaço antes do - apenas se o último não for um operador (para não quebrar a notação do número negativo)
+         if (!['+', '-', '*', '^'].includes(atual.slice(-1))) {
+           atual += ' - ';
+         } else {
+           atual += '-';
+         }
+      } else {
+        atual += caractere;
+      }
+
+    } else if (['*', '^', '.'].includes(caractere)) {
+       // Evita múltiplos operadores seguidos (ex: x**)
+      if (['*', '^', '.'].includes(atual.slice(-1))) {
+        return; 
+      }
+      atual += caractere;
+
+    } else {
+      // Números e 'x'
+      atual += caractere;
+    }
+
+    this.setValorCampo(this.campoAtual, atual);
   }
 
-  apagarUltimo() {
-    this.expressao = this.expressao.slice(0, -1);
+  apagarUltimo(): void {
+    const atual = this.getValorCampo(this.campoAtual);
+    const novo = atual.slice(0, -1);
+    this.setValorCampo(this.campoAtual, novo);
   }
 
   limpar() {
-    this.expressao = '';
-    this.valorX = '';
+    this.expressaoStr = '';
+    this.valorXStr = '';
     this.resultado= '';
   }
 
+  selecionarCampo(campo: Campo): void {
+    this.campoAtual = campo;
+  }
+
+  private setValorCampo(campo: Campo, valor: string): void {
+    if (campo === 'expressao') this.expressaoStr = valor;
+    else this.valorXStr = valor;
+  }
+
+  // Obtém o valor do campo selecionado
+  getValorCampo(campo: Campo): string {
+    return campo === 'expressao' ? this.expressaoStr : this.valorXStr;
+  }
 }

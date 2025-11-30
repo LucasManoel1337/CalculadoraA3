@@ -2,9 +2,7 @@
   <h2 class="titulo-pagina">Divisão de Polinômios</h2>
 
   <div class="content-container">
-
-    <div class="display-header">P(x) / D(x)</div>
-      <input type="text" class="display" [value]="'(' + (dividendoStr || 'P(x)') + ') / (' + (divisorStr || 'D(x)') + ')'" readonly placeholder="Use o teclado abaixo para digitar o polinômio"/>
+      <app-display label="P(x) / D(x)" [value]="'(' + (dividendoStr || 'P(x)') + ') / (' + (divisorStr || 'D(x)') + ')'"></app-display>
 
       <div class="campo-atual">
         Campo selecionado: <span>{{ campoAtual | uppercase }}</span>

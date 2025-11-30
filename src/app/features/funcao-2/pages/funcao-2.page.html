@@ -3,9 +3,7 @@
 
   <div class="content-container">
 
-    <div class="display-header">a · x² + b · x + c</div>
-
-    <input type="text" class="display" [value]="display" readonly />
+    <app-display label="a · x² + b · x + c" [value]="display"></app-display>
 
     <div class="campo-atual">
       Campo selecionado: <span>{{ campoAtual | uppercase }}</span>

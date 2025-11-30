@@ -4,13 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, CategoryScale, LinearScale, LineElement, PointElement, LineController, Title, Tooltip, Legend } from 'chart.js';
 import { evaluate } from 'mathjs';
+import { DisplayComponent } from '../../../shared/components/display/display.component';
 
 Chart.register(CategoryScale, LinearScale, LineElement, PointElement, LineController, Title, Tooltip, Legend);
 
 @Component({
   selector: 'app-trigonometria',
   standalone: true,
-  imports: [CommonModule, FormsModule, BaseChartDirective],
+  imports: [CommonModule, FormsModule, BaseChartDirective, DisplayComponent],
   templateUrl: './trigonometria.page.html',
   styleUrls: ['./trigonometria.page.css']
 })

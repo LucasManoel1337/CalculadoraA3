@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DisplayComponent } from '../../../shared/components/display/display.component';
 
 @Component({
   selector: 'app-operacoes-basicas',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, DisplayComponent],
   templateUrl: './operacoes-basicas.page.html',
   styleUrls: ['./operacoes-basicas.page.css'],
 })

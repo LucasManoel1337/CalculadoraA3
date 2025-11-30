@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DisplayComponent } from '../../../shared/components/display/display.component';
 
 const EPSILON = 1e-10;
 
@@ -11,7 +12,7 @@ type Campo = 'p1' | 'p2';
   templateUrl: './multiplicar-polinomio.page.html',
   styleUrls: ['./multiplicar-polinomio.page.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [CommonModule, ReactiveFormsModule, DisplayComponent]
 })
 export class MultiplicarPolinomiosPage {
   p1Str: string = '';

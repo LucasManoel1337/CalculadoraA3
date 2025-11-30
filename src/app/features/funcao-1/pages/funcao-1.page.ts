@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { DisplayComponent } from '../../../shared/components/display/display.component';
 
 type Campo = 'a' | 'x' | 'b';
 
@@ -19,7 +20,7 @@ interface Eixo {
 @Component({
   selector: 'app-funcao-1',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DisplayComponent],
   templateUrl: './funcao-1.page.html',
   styleUrls: ['./funcao-1.page.css'],
 })

@@ -2,12 +2,24 @@
   <h2 class="titulo-pagina">Tela Limites</h2>
 
   <div class="content-container">
+    <app-display label="Função f(x):" [value]="expressaoStr"></app-display>
+    <app-display label="x →" [value]="valorXStr"></app-display>
 
-    <label class="label">Função f(x):</label>
-    <input class="input display" type="text" [(ngModel)]="expressao"/>
+    <div class="campo-atual">
+      Campo selecionado: <span>{{ campoAtual | uppercase }}</span>
+    </div>
 
-    <label class="label">x →</label>
-    <input class="input display" type="number" [(ngModel)]="valorX" (keypress)="permitirSomenteNumeros($event, 20)"/>
+    <div class="coeficientes-row">
+      <div class="coef-box" [class.ativo]="campoAtual === 'expressao'" (click)="selecionarCampo('expressao')">
+        <div class="coef-label">Expressão</div>
+        <div class="coef-valor">{{ expressaoStr || 'E(x)' }}</div>
+      </div>
+
+      <div class="coef-box" [class.ativo]="campoAtual === 'valorX'" (click)="selecionarCampo('valorX')">
+        <div class="coef-label">Valor X</div>
+        <div class="coef-valor">{{ valorXStr || 'V(x)' }}</div>
+      </div>
+    </div>
 
     <div class="botoes-container">
       <button class="operador-btn" (click)="adicionar('x')">x</button>

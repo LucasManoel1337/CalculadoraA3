@@ -2,7 +2,7 @@
   <h2 class="titulo-pagina">Calculadora Trigonométrica</h2>
   <div class="content-container">
 
-    <input type="text" class="display" [(ngModel)]="display" placeholder="Ex: sin(x)+0.5*cos(2*x)" />
+    <app-display label="Expressão:" [value]="display" placeholder="Ex: sin(x)+0.5*cos(2*x)" ></app-display>
 
     <div style="margin: 10px 0;">
       <label>

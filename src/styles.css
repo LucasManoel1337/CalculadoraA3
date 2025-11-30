@@ -37,6 +37,15 @@
   gap: 18px;
 }
 
+h1, h2, h3, h4 {
+  font-family: "Merriweather", serif;
+  color: #1B3C73;
+}
+
+body, input, button {
+  font-family: "Inter", sans-serif;
+}
+
 /* ===== MOBILE FIX REAL ===== */
 @media (max-width: 768px) {
 

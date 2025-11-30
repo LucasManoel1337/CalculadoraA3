@@ -2,11 +2,7 @@
   <h2 class="titulo-pagina">Multiplicação de Polinômios</h2>
 
   <div class="content-container">
-
-    <div class="display-header">P(x) · M(x)</div>
-
-    <input type="text" class="display" [value]="'(' + (p1Str || 'P(x)') + ') * (' + (p2Str || 'M(x)') + ')'" readonly
-      placeholder="Use o teclado abaixo para digitar o polinômio" />
+    <app-display label="P(x) · M(x)" [value]="'(' + (p1Str || 'P(x)') + ') * (' + (p2Str || 'M(x)') + ')'"></app-display>
 
 
     <div class="campo-atual">

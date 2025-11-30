@@ -3,9 +3,7 @@
 
   <div class="content-container">
 
-    <div class="display-header">Expressão</div>
-
-    <input type="text" class="display" [value]="display" readonly />
+    <app-display label="Expressao" [value]="display"></app-display>
 
     <div class="botoes-container">
       <button (click)="adicionar('7')">7</button>
