@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const EPSILON = 1e-10;
+
+type Campo = 'dividendo' | 'divisor';
 
 @Component({
   selector: 'app-divisao-polinomios',
@@ -13,54 +15,116 @@ const EPSILON = 1e-10;
 })
 export class DivisaoPolinomiosPage {
 
-  polyForm: FormGroup;
-
+  dividendoStr: string = '';
+  divisorStr: string = '';
+  campoAtual: Campo = 'dividendo';
   resultado: { quociente: string, resto: string } | null = null;
 
-  constructor(private fb: FormBuilder) {
-    this.polyForm = this.fb.group({
-      dividendo: ['', Validators.required],
-      divisor: ['', Validators.required]
-    });
+  private readonly MAX_LENGTH = 50;
+
+  selecionarCampo(campo: Campo): void {
+    this.campoAtual = campo;
+  }
+
+  getValorCampo(campo: Campo): string {
+    return campo === 'dividendo' ? this.dividendoStr : this.divisorStr;
+  }
+
+  private setValorCampo(campo: Campo, valor: string): void {
+    if (campo === 'dividendo') this.dividendoStr = valor;
+    else this.divisorStr = valor;
+  }
+
+  adicionar(caractere: string): void {
+    let atual = this.getValorCampo(this.campoAtual);
+
+    if (atual.length >= this.MAX_LENGTH) return;
+
+    if (['+', '-'].includes(caractere)) {
+      if (['+', '-', '*', '^'].includes(atual.slice(-1))) {
+        atual = atual.slice(0, -1); 
+      }
+      if (atual.length > 0 && caractere === '+') {
+         atual += ' + ';
+      } else if (atual.length > 0 && caractere === '-') {
+         if (!['+', '-', '*', '^'].includes(atual.slice(-1))) {
+           atual += ' - ';
+         } else {
+           atual += '-';
+         }
+      } else {
+        atual += caractere;
+      }
+
+    } else if (['*', '^', '.'].includes(caractere)) {
+      if (['*', '^', '.'].includes(atual.slice(-1))) {
+        return; 
+      }
+      atual += caractere;
+
+    } else {
+      atual += caractere;
+    }
+
+    this.setValorCampo(this.campoAtual, atual);
+  }
+
+  apagarUltimo(): void {
+    const atual = this.getValorCampo(this.campoAtual).trim();
+    let novo = atual.slice(0, -1);
+    
+    if (novo.endsWith(' + ') || novo.endsWith(' - ')) {
+      novo = novo.slice(0, -3);
+    } else if (novo.endsWith('+') || novo.endsWith('-')) {
+      novo = novo.slice(0, -1);
+    }
+
+    this.setValorCampo(this.campoAtual, novo.trim());
+  }
+
+  limpar(): void {
+    this.dividendoStr = '';
+    this.divisorStr = '';
+    this.resultado = null;
+    this.campoAtual = 'dividendo';
   }
 
   dividir() {
-    if (this.polyForm.invalid) return;
-    
-    const dividendoStr = this.polyForm.value.dividendo;
-    const divisorStr = this.polyForm.value.divisor;
+    if (!this.dividendoStr || !this.divisorStr) {
+      this.resultado = {
+        quociente: 'Erro: Preencha Dividendo e Divisor.',
+        resto: '',
+      };
+      return;
+    }
 
     try {
-      const parsedDividendo = this.parsePoly(dividendoStr);
-      const parsedDivisor = this.parsePoly(divisorStr);
+      const parsedDividendo = this.parsePoly(this.dividendoStr);
+      const parsedDivisor = this.parsePoly(this.divisorStr);
 
       const res = this.realizarDivisao(parsedDividendo, parsedDivisor);
 
       this.resultado = {
         quociente: this.polyToString(res.quociente),
-        resto: this.polyToString(res.resto)
+        resto: this.polyToString(res.resto),
       };
     } catch (e) {
       this.resultado = {
-        quociente: 'Erro na entrada ou divisão impossível',
-        resto: 'Verifique a formatação dos polinômios'
+        quociente: 'Erro na entrada ou divisão impossível (divisão por zero ou formato inválido).',
+        resto: '',
       };
-      console.error(e);
+      console.error("Erro no cálculo:", e);
     }
   }
 
-  // Polinômio é um Record<grau, coeficiente>
   parsePoly(poly: string): Record<number, number> {
-    // 1. Limpeza e normalização
-    poly = poly.replace(/\s/g, '').replace(/\*/g, ''); // Remove espaços e *
+    poly = poly.replace(/\s/g, '');
+    poly = poly.replace(/\*/g, '');
     
-    // 2. Garante que todos os '-' sejam precedidos por '+' (para o split)
     poly = poly.replace(/-/g, "+-");
     
-    // 3. Remove um '+' inicial que pode ser gerado (ex: +3x)
     if (poly.startsWith("+-")) poly = "-" + poly.substring(2);
     else if (poly.startsWith("+")) poly = poly.substring(1);
-
 
     let termos = poly.split("+").filter(t => t.trim() !== "");
 
@@ -69,25 +133,19 @@ export class DivisaoPolinomiosPage {
     termos.forEach(t => {
       if (t === "") return;
 
-      // Regex principal para capturar o termo: [coeficiente](x^|[x])(grau)
-      const match = t.match(/^([+-]?\d*)\s*x(?:\^(\d+))?$/);
-      
       let coef: number;
       let grau: number;
 
       if (t.includes('x')) {
-        // Caso de x^n (n>1)
-        let powerMatch = t.match(/([+-]?\d*)x\^(\d+)/);
+        let powerMatch = t.match(/([+-]?\d*\.?\d*)x\^(\d+)/);
         if (powerMatch) {
           grau = Number(powerMatch[2]);
           let coefStr = powerMatch[1];
           if (coefStr === '' || coefStr === '+') coef = 1;
           else if (coefStr === '-') coef = -1;
           else coef = Number(coefStr);
-        } 
-        // Caso de x^1 (Ex: 5x ou x ou -x)
-        else {
-          let linearMatch = t.match(/([+-]?\d*)x/);
+        } else {
+          let linearMatch = t.match(/([+-]?\d*\.?\d*)x/);
           if (!linearMatch) return;
           grau = 1;
           let coefStr = linearMatch[1];
@@ -95,14 +153,11 @@ export class DivisaoPolinomiosPage {
           else if (coefStr === '-') coef = -1;
           else coef = Number(coefStr);
         }
-      } 
-      // Caso Constante (Ex: -10 ou 5)
-      else {
+      } else {
         grau = 0;
         coef = Number(t);
       }
       
-      // Acumula coeficientes para o mesmo grau (ex: x^2 + 2x^2)
       obj[grau] = (obj[grau] || 0) + coef;
     });
 
@@ -111,10 +166,9 @@ export class DivisaoPolinomiosPage {
 
   polyToString(poly: Record<number, number>): string {
     let termos: string[] = [];
-    // Ordena do maior para o menor grau
     let graus = Object.keys(poly)
       .map(Number)
-      .filter(g => Math.abs(poly[g]) > EPSILON) // Filtra coeficientes que são zero (com tolerância)
+      .filter(g => Math.abs(poly[g]) > EPSILON) 
       .sort((a,b) => b-a);
 
     if (graus.length === 0) return '0';
@@ -123,8 +177,9 @@ export class DivisaoPolinomiosPage {
       let c = poly[g];
       let sinal: string;
       let valor = Math.abs(c);
+      
+      const valorFormatado = Math.round(valor * 10000) / 10000;
 
-      // Define o sinal (só adiciona '+' se não for o primeiro termo)
       if (index === 0) {
         sinal = c > 0 ? '' : '-';
       } else {
@@ -133,22 +188,18 @@ export class DivisaoPolinomiosPage {
 
       let termo = '';
       if (g === 0) {
-        // Constante
-        termo = sinal + valor;
+        termo = sinal + valorFormatado;
       } else if (g === 1) {
-        // x^1
-        let coefStr = valor === 1 ? '' : String(valor);
+        let coefStr = valorFormatado === 1 ? '' : String(valorFormatado);
         termo = sinal + coefStr + 'x';
       } else {
-        // x^n (n > 1)
-        let coefStr = valor === 1 ? '' : String(valor);
+        let coefStr = valorFormatado === 1 ? '' : String(valorFormatado);
         termo = sinal + coefStr + 'x^' + g;
       }
       
       termos.push(termo.trim());
     });
 
-    // Remove o espaço extra no início se o primeiro termo for positivo
     let res = termos.join("");
     return res.replace(/^\s*\+\s*/, "").trim();
   }
@@ -167,32 +218,27 @@ export class DivisaoPolinomiosPage {
     let getGrauResto = () => Math.max(
         ...Object.keys(resto)
             .map(Number)
-            .filter(k => Math.abs(resto[k]) > EPSILON) // USA EPSILON AQUI
+            .filter(k => Math.abs(resto[k]) > EPSILON)
     );
 
     let grauResto = getGrauResto();
 
-    // Loop de divisão
     while (grauResto >= grauDivisor) {
       const grauNovo = grauResto - grauDivisor;
       const coefNovo = resto[grauResto] / coefDivisor;
 
-      // Adiciona o novo termo ao quociente
       quociente[grauNovo] = (quociente[grauNovo] || 0) + coefNovo;
 
-      // Subtrai (termo do quociente * divisor) do resto
       for (let g in divisor) {
         const gNum = Number(g);
         const grauAtual = gNum + grauNovo;
         
-        // Multiplica o termo do divisor pelo coeficiente do quociente e subtrai do resto
         resto[grauAtual] = (resto[grauAtual] || 0) - divisor[gNum] * coefNovo;
       }
 
-      // Procura o novo maior grau do resto para continuar o loop
       grauResto = getGrauResto();
       
-      if (grauResto === -Infinity) break; // Divisão completa
+      if (grauResto === -Infinity) break;
     }
 
     return { quociente, resto };

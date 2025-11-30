@@ -3,37 +3,71 @@
 
   <div class="content-container">
 
-    <form [formGroup]="polyForm" (ngSubmit)="dividir()">
+    <div class="display-header">P(x) / D(x)</div>
+      <input type="text" class="display" [value]="'(' + (dividendoStr || 'P(x)') + ') / (' + (divisorStr || 'D(x)') + ')'" readonly placeholder="Use o teclado abaixo para digitar o polinômio"/>
 
-      <div class="form-group">
-        <label for="dividendo">Dividendo</label>
-        <input 
-          type="text"
-          id="dividendo"
-          formControlName="dividendo"
-          placeholder="Ex: 2x^3 + 5x^2 - 3x + 1" />
+      <div class="campo-atual">
+        Campo selecionado: <span>{{ campoAtual | uppercase }}</span>
       </div>
 
-      <div class="form-group">
-        <label for="divisor">Divisor</label>
-        <input 
-          type="text"
-          id="divisor"
-          formControlName="divisor"
-          placeholder="Ex: x + 2" />
+      <div class="coeficientes-row">
+        <div
+          class="coef-box"
+          [class.ativo]="campoAtual === 'dividendo'"
+          (click)="selecionarCampo('dividendo')">
+          <div class="coef-label">Dividendo P(x)</div>
+          <div class="coef-valor">{{ dividendoStr || 'P(x)' }}</div>
+        </div>
+
+        <div
+          class="coef-box"
+          [class.ativo]="campoAtual === 'divisor'"
+          (click)="selecionarCampo('divisor')">
+          <div class="coef-label">Divisor D(x)</div>
+          <div class="coef-valor">{{ divisorStr || 'D(x)' }}</div>
+        </div>
       </div>
 
-      <button type="submit" class="action-btn">Calcular</button>
-    </form>
+      <div class="botoes-container">
+        <!-- Linha 1: x, ^, *, Backspace -->
+        <button class="operador-btn" (click)="adicionar('x')">x</button>
+        <button class="operador-btn" (click)="adicionar('^')">^</button>
+        <button class="operador-btn" (click)="adicionar('*')">*</button>
+        <button class="apagar-btn" (click)="apagarUltimo()">←</button>
+          
+        <!-- Linha 2: 7, 8, 9, Clear -->
+        <button (click)="adicionar('7')">7</button>
+        <button (click)="adicionar('8')">8</button>
+        <button (click)="adicionar('9')">9</button>
+        <button class="clear-btn" (click)="limpar()">C</button>
 
-    <div *ngIf="resultado" class="matriz-container">
-      <h2 class="sub-title">Resultado</h2>
+        <!-- Linha 3: 4, 5, 6, = -->
+        <button (click)="adicionar('4')">4</button>
+        <button (click)="adicionar('5')">5</button>
+        <button (click)="adicionar('6')">6</button>
+        <button class="calcular-btn" (click)="dividir()">Calcular</button>
 
-      <div class="resultado-box">
-        <p><strong>Quociente:</strong> {{ resultado.quociente }}</p>
-        <p><strong>Resto:</strong> {{ resultado.resto }}</p>
+        <!-- Linha 4: 1, 2, 3, + -->
+        <button (click)="adicionar('1')">1</button>
+        <button (click)="adicionar('2')">2</button>
+        <button (click)="adicionar('3')">3</button>
+        <button class="operador-btn" (click)="adicionar('+')">+</button>
+
+        <button class="zero-btn" (click)="adicionar('0')">0</button>
+        <button class="operador-btn" (click)="adicionar('-')">-</button>
+        <button class="operador-btn" (click)="adicionar('.')">.</button>
       </div>
-    </div>
+
+      @if (resultado) {
+        <div class="resultado-container">
+          <h2 class="sub-title">Resultado</h2>
+
+          <div class="resultado-box">
+            <p><strong>Quociente:</strong> {{ resultado.quociente }}</p>
+            <p><strong>Resto:</strong> {{ resultado.resto }}</p>
+          </div>
+        </div>
+      }
 
   </div>
 </div>
