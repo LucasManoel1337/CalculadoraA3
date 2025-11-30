@@ -38,7 +38,6 @@ export class HomePage {
   ];
 
   linguagens = [
-    'Javacsript',
     'Typescript',
     'HTML',
     'CSS',

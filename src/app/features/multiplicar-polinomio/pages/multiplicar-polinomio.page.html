@@ -1,8 +1,65 @@
 <div class="page-container">
-    <h2 class="titulo-pagina">Tela Multiplicação de Polinomio</h2>
-    <div class="content-container">
-        
+  <h2 class="titulo-pagina">Multiplicação de Polinômios</h2>
+
+  <div class="content-container">
+
+    <div class="display-header">P(x) · M(x)</div>
+
+    <input type="text" class="display" [value]="'(' + (p1Str || 'P(x)') + ') * (' + (p2Str || 'M(x)') + ')'" readonly
+      placeholder="Use o teclado abaixo para digitar o polinômio" />
 
 
+    <div class="campo-atual">
+      Campo selecionado: <span>{{ campoAtual | uppercase }}</span>
     </div>
+
+    <div class="coeficientes-row">
+      <div class="coef-box" [class.ativo]="campoAtual === 'p1'" (click)="selecionarCampo('p1')">
+        <div class="coef-label">Polinômio 1 (P(x))</div>
+        <div class="coef-valor">{{ p1Str || 'P(x)' }}</div>
+      </div>
+
+      <div class="coef-box" [class.ativo]="campoAtual === 'p2'" (click)="selecionarCampo('p2')">
+        <div class="coef-label">Polinômio 2 (M(x))</div>
+        <div class="coef-valor">{{ p2Str || 'M(x)' }}</div>
+      </div>
+    </div>
+
+    <div class="botoes-container">
+      <button class="operador-btn" (click)="adicionar('x')">x</button>
+      <button class="operador-btn" (click)="adicionar('^')">^</button>
+      <button class="operador-btn" (click)="adicionar('*')">*</button>
+      <button class="apagar-btn" (click)="apagarUltimo()">←</button>
+
+      <button (click)="adicionar('7')">7</button>
+      <button (click)="adicionar('8')">8</button>
+      <button (click)="adicionar('9')">9</button>
+      <button class="clear-btn" (click)="limpar()">C</button>
+
+      <button (click)="adicionar('4')">4</button>
+      <button (click)="adicionar('5')">5</button>
+      <button (click)="adicionar('6')">6</button>
+      <button class="calcular-btn" (click)="multiplicar()">Multiplicar</button>
+
+      <button (click)="adicionar('1')">1</button>
+      <button (click)="adicionar('2')">2</button>
+      <button (click)="adicionar('3')">3</button>
+      <button class="operador-btn" (click)="adicionar('+')">+</button>
+
+      <button class="zero-btn" (click)="adicionar('0')">0</button>
+      <button class="operador-btn" (click)="adicionar('-')">-</button>
+      <button class="operador-btn" (click)="adicionar('.')">.</button>
+    </div>
+
+    @if (resultado) {
+    <div class="resultado-container">
+      <h2 class="sub-title">Resultado da Multiplicação</h2>
+
+      <div class="resultado-box">
+        <p><strong>P₁(x) · P₂(x):</strong> {{ resultado }}</p>
+      </div>
+    </div>
+    }
+
+  </div>
 </div>
