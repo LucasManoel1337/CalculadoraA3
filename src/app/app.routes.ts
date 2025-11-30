@@ -38,4 +38,8 @@ export const routes: Routes = [
     path: 'dividir-polinomio', 
     loadComponent: () => import('./features/divisao-polinomio/pages/divisao-polinomio.page').then(m => m.DivisaoPolinomiosPage)
   },
+  { 
+    path: 'limite', 
+    loadComponent: () => import('./features/limite/pages/limite.page').then(m => m.LimitesPage)
+  },
 ];
