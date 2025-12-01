@@ -43,6 +43,14 @@ export const routes: Routes = [
     loadComponent: () => import('./features/limite/pages/limite.page').then(m => m.LimitesPage)
   },
   { 
+    path: 'soma-polinomio', 
+    loadComponent: () => import('./features/soma-polinomio/pages/soma-polinomio.page').then(m => m.SomaPolinomioPage)
+  },
+  { 
+    path: 'subtracao-polinomio', 
+    loadComponent: () => import('./features/subtracao-polinomio/pages/subtracao-polinomio.page').then(m => m.SubtracaoPolinomioPage)
+  },
+  { 
     path: '**', 
     loadComponent: () => import('./features/not-found/pages/not-found.page').then(m => m.NotFoundPage) 
   }

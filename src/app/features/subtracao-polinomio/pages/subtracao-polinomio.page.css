@@ -1,0 +1,113 @@
+.campo-atual {
+  font-size: 14px;
+  color: #4b5563;
+  margin-bottom: 10px;
+}
+
+.campo-atual span {
+  font-weight: 700;
+}
+
+.coeficientes-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.coef-box {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.coef-box:hover {
+  background: #eef2ff;
+}
+
+.coef-box.ativo {
+  border-color: #4a7dff;
+  background: #e0ecff;
+}
+
+.coef-label {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.coef-valor {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.botoes-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 15px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.zero-btn {
+  grid-column: span 2;
+}
+
+.clear-btn {
+  background-color: #dc3545;
+}
+
+.clear-btn:hover {
+  background-color: #6d1720;
+}
+
+.calcular-btn {
+  background-color: #25b900;
+}
+
+.calcular-btn:hover {
+  background-color: #176803;
+}
+
+.apagar-btn {
+  background-color: #00eeff;
+}
+
+.apagar-btn:hover {
+  background-color: #028a94;
+}
+
+.resultado-container {
+  margin-top: 24px;
+}
+
+.sub-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.resultado-linha {
+  font-size: 16px;
+  margin: 4px 0;
+}
