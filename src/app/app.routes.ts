@@ -42,4 +42,8 @@ export const routes: Routes = [
     path: 'limite', 
     loadComponent: () => import('./features/limite/pages/limite.page').then(m => m.LimitesPage)
   },
+  { 
+    path: '**', 
+    loadComponent: () => import('./features/not-found/pages/not-found.page').then(m => m.NotFoundPage) 
+  }
 ];
