@@ -42,3 +42,7 @@ button:hover {
 .apagar-btn:hover  {
   background-color: #028a94;
 }
+
+.duplo-btn {
+  grid-column: span 2;
+}

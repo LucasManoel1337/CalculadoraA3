@@ -12,43 +12,40 @@
     </div>
 
     <div class="botoes-container">
-      <!-- Parênteses e ações -->
-      <button (click)="append('(')">(</button>
-      <button (click)="append(')')">)</button>
+      <button class="operador-btn" (click)="append('x')">x</button>
+      <button class="operador-btn" (click)="append('^')">^</button>
+      <button class="operador-btn" (click)="append('*')">*</button>
       <button class="apagar-btn" (click)="apagar()">←</button>
-      <button class="calcular-btn" (click)="calcular()">=</button>
 
-      <!-- Números e operadores -->
       <button (click)="append('7')">7</button>
       <button (click)="append('8')">8</button>
       <button (click)="append('9')">9</button>
-      <button (click)="append('/')">/</button>
+      <button class="clear-btn" (click)="limpar()">C</button>
 
       <button (click)="append('4')">4</button>
       <button (click)="append('5')">5</button>
       <button (click)="append('6')">6</button>
-      <button (click)="append('*')">*</button>
+      <button class="calcular-btn" (click)="calcular()">=</button>
 
       <button (click)="append('1')">1</button>
       <button (click)="append('2')">2</button>
       <button (click)="append('3')">3</button>
-      <button (click)="append('-')">-</button>
+      <button class="operador-btn" (click)="append('+')">+</button>
 
-      <button class="clear-btn" (click)="limpar()">C</button>
-      <button (click)="append('0')">0</button>
-      <button (click)="append('.')">.</button>
-      <button (click)="append('+')">+</button>
+      <button class="zero-btn" (click)="append('0')">0</button>
+      <button class="operador-btn" (click)="append('-')">-</button>
+      <button class="operador-btn" (click)="append('.')">.</button>
+      <button class="operador-btn" (click)="append('/')">/</button>
 
       <!-- Funções trigonométricas -->
+      <button (click)="append('(')">(</button>
+      <button (click)="append(')')">)</button>
       <button (click)="sin()">sin</button>
       <button (click)="cos()">cos</button>
       <button (click)="tan()">tan</button>
       <button (click)="asin()">asin</button>
       <button (click)="acos()">acos</button>
       <button (click)="atan()">atan</button>
-
-      <!-- Variável X -->
-      <button (click)="append('x')">X</button>
 
       <!-- Gerar gráfico -->
       <button class="calcular-btn" (click)="gerarGrafico()" style="grid-column: span 4;">Gerar Gráfico</button>
